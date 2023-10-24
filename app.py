@@ -285,7 +285,6 @@ WHERE
 
     return adminredirect("/admin/members_info.html", inc=inc, complete=complete)
 
-
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
     history = mysql.connection.cursor()
