@@ -1,68 +1,65 @@
-/* main design here */
-main {
-  /* gumamit nalang ako ng margin-top naka fixed kasi yung navbar try mo tanggalin tong margin pupunta sa taas sa likod
-  nung navbar. diko alam pano nangyayari yon e */
+.pop-up-edit{
+  width: 80%;
   background-color: #6FB9B9;
-  height: 100%;
-  padding: 20px;
-  margin: 0 70px 0 70px;
-}
-body{
-  margin: 100px 0 0 0;
-}
-h1 {
-  text-align: center;
-  margin: 5px;
-}
+  margin: 0 auto;
+  padding: 1em;
+  border-radius: 15px ;
+  /* center div */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
-h3 {
-  text-align: center;
+}
+.pop-up-edit::backdrop{
+  backdrop-filter: blur(5px);
+}
+/* alam ko meron na code neto e */
+.personal-information{
+  display: grid;
+  grid-template-columns: 1fr 1fr;   
+  margin: 0 20px;
+  row-gap: 10px;
+  padding-bottom:10px ;
+  border-bottom: 1px solid black;
+}
+.personal-information label input ,select , .property-information label input{
+  display: block;
+}
+input[type="text"] {
+  padding: 5px 10px;
+  min-width: 70%;
+}
+.property-information{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin: 0 20px;
+}
+.property-information label{
   grid-column: span 2;
 }
-
-.personal-information,
-.account-information {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin: 20px 20px;
-  row-gap: 10px;
+.property-information label:nth-child(4), .property-information label:nth-child(5){
+  grid-column: span 3;
 }
-
-.personal-information label input,
-select,
-.account-information label input {
-  display: block;
+/*. buttons */
+.pop-up-edit h3, .buttons {
+  text-align: center;
+  margin-top: 20px;
 }
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-select {
-  padding: 3px 10px;
-  min-width: 70%;
-  border-radius: 3px;
-  outline: none;
-  border: none;
+.buttons button{
+  width: 10rem;
+  height: 2rem;
 }
-
-input:focus {
-  outline: 1px solid;
-
-}
-
-.register {
-  display: block;
-  margin: auto;
-  width: auto;
-  padding: 10px 30px;
-  border-radius: 5px;
-  outline: none;
-  border: 1px solid black;
-  cursor: pointer;
-  line-height: 1.8;
-  font-size: 15px;
-}
-.register:hover{
-  box-shadow: 2px 2px 5px black;
-
+/* responsive */
+@media screen and (max-width:500px) {
+  .personal-information, .property-information{
+      grid-template-columns: 1fr;
+  }
+  .buttons{
+      display: flex; 
+      justify-content:space-evenly;
+  }
+  .buttons button{
+      width: 100px;
+  }    
 }

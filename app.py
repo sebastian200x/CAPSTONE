@@ -299,9 +299,11 @@ def admin_members_info():
     return adminredirect("/admin/members_info.html", inc=inc, complete=complete)
 
 
-# @app.route("/admin/edit_info/<int:id>")
-# def admin_edit_info():
-#     inc = mysql.connection.cursor()
+
+@app.route("/admin/edit_info/<int:id>")
+def admin_edit_info(id):
+    return adminredirect("/admin/edit_info.html")
+  
 
 
 @app.route("/admin/payment_history", methods=["POST", "GET"])

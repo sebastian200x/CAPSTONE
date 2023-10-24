@@ -29,7 +29,7 @@
         <td>{{ incs[12] }}</td>
         <td>{{ incs[13] }}</td>
         <td>
-          <button class="edit action"><i class="fa-solid fa-pen-to-square"></i> EDIT</button>
+          <a href="/admin/edit_info/{{incs[1]}}" class="edit action"><i class="fa-solid fa-pen-to-square"></i> EDIT</a>
           <button class="delete action" onclick="return confirm('Are you sure you want to delete this account?')">
             <i class='fa-solid fa-trash'></i> DELETE</button>
         </td>
@@ -57,8 +57,10 @@
         <td>{{ completed[12] }}</td>
         <td>{{ completed[13] }}</td>
         <td>
-          <a href="#" class="edit action"><i class="fa-solid fa-pen-to-square"></i> EDIT</a>
-          <a href="#" class="delete action"><i class='fa-solid fa-trash'></i> DELETE</a>
+          <a href="/admin/edit_info/{{completed[1]}}" class="edit action"><i class="fa-solid fa-pen-to-square"></i>
+            EDIT</a>
+          <i class='fa-solid fa-trash'></i> DELETE</button>
+
         </td>
         {% endfor %}
         {% else %}
