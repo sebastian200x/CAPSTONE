@@ -1,0 +1,136 @@
+body {
+    margin-top: 90px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-top: 2%;
+    padding: 1%;
+}
+
+.scrollable {
+    max-height: 300px;
+    /* Set the maximum height for the scrollable area */
+    overflow-y: scroll;
+    /* Enable vertical scrolling */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 0;
+}
+
+.table td,
+.table th {
+    border: 1px solid black;
+    padding: 1%;
+}
+
+th {
+    background-color: #f2f2f2;
+    /* Set a background color for the header */
+    position: sticky;
+    top: 0;
+    outline: 1px solid black;
+    /* Stick the header to the top of the scrollable area */
+}
+
+td:last-child {
+    width: 20%;
+}
+
+.delete {
+    background-color: red;
+    color: white;
+    outline: none;
+}
+
+.edit {
+    background-color: green;
+    color: white;
+}
+
+.view {
+    background-color: gray;
+    color: white;
+}
+
+.action {
+    padding: 3%;
+    text-decoration: none;
+    width: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Pop Up edit */
+.pop-up-edit{
+    width: 80%;
+    background-color: #6FB9B9;
+    margin: 0 auto;
+    padding: 1em;
+    /* center div */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.pop-up-edit::backdrop{
+    backdrop-filter: blur(5px);
+}
+
+.personal-information{
+    display: grid;
+    grid-template-columns: 1fr 1fr;   
+    margin: 0 20px;
+    row-gap: 10px;
+    padding-bottom:10px ;
+    border-bottom: 1px solid black;
+}
+.personal-information label input ,select , .property-information label input{
+    display: block;
+}
+input[type="text"] {
+    padding: 5px 10px;
+    min-width: 70%;
+}
+.property-information{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 0 20px;
+}
+.property-information label{
+    grid-column: span 2;
+}
+.property-information label:nth-child(4), .property-information label:nth-child(5){
+    grid-column: span 3;
+}
+/*. buttons */
+.pop-up-edit h3, .buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+.buttons button{
+    width: 10rem;
+    height: 2rem;
+}
+/* responsive */
+@media screen and (max-width:500px) {
+    .personal-information, .property-information{
+        grid-template-columns: 1fr;
+    }
+    .buttons{
+        display: flex; 
+        justify-content:space-evenly;
+    }
+    .buttons button{
+        width: 100px;
+    }    
+}

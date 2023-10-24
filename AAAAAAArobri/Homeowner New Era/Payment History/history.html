@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Reminder</title>
+    <link rel="stylesheet" href="history.css">
+</head>
+<body>
+    <div class="table">
+        <h1>Payment History</h1>
+       <table>
+            <thead>
+                <tr>
+                    <th>Transaction Type</th>
+                    <th>Date Paid</th>
+                    <th>Amount</th>
+                    <th>Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Factura Qt Quitay</td>
+                    <td>Money</td>
+                    <td>₱ 690.12</td>
+                    <td>
+                      <button class="btn-remind">View</button>
+                          
+                    </td>
+                  </tr>
+            </tbody>
+        </table> 
+        
+        
+
+        <dialog  class="pop-up-edit">
+            <p><b>Name: </b></p>
+            <p><b>Transaction Type:</b></p>
+            <p><b>Total Amount:</b></p>
+            <p><b>Date of payment:</b></p>
+            <button class="close">Close</button>
+        </dialog>
+    </div>
+
+</body>
+
+<script>
+    const modal = document.querySelector('.pop-up-edit');
+    const openModal = document.querySelector('.btn-remind');
+    // pang close lang to modal pero may code na pwede mo save balakanadyan
+    const closeModal = document.querySelector('.close');
+
+    openModal.addEventListener('click' ,() => {
+      modal.showModal();
+    })
+
+    closeModal.addEventListener('click' ,() => {
+      modal.close();
+    })
+  </script>
+</html>

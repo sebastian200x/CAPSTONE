@@ -1,0 +1,68 @@
+{%extends "home.html"%}{% block title%}login{% endblock %}
+{% block content%}  
+ 
+<h1>Hello</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td scope="col-span 2">Userinfo id</td>
+            <td scope="col">User id</td>
+            <td scope="col">email</td>
+            <td scope="col">id no</td>
+            <td scope="col">Payment amount</td>
+            <td scope="col">Payment Due</td>    
+            <td scope="col">Manage</td>       
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for row in users %}
+        <td>{{row.0}}</td>
+        <td>{{row.1}}</td>
+        <td>{{row.3}}</td>
+        <td>{{row.4}}</td>
+        <td>{{row.12}}</td>
+        <td>{{row.13}}</td>
+        <td>
+            <a href="/remindp/{{row.1}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.1}}">Remind</a> 
+            <a href="/delete/{{row.0}}"  onclick="return confirm('GUSTO MO BA TALGA TANGGALIN? ')" class="btn btn-danger btn-sm">delete</a></a>
+        </td>
+    </tr>   
+       <!-- Remind Payment-->
+       <div id="modaledit{{row.1}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" >Set payment due date</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url_for('remindp')}}" method="POST">
+                        <input type="text" name="id" id="id" value="{{row.1}}">
+                        <div class="form-group">
+                            
+                            
+                            <label for="Date Time">Date time</label>
+                            <input type="datetime-local" name="duedate" id="duedate">
+                         
+                            
+
+                        </div>
+                        <input type="submit" value="submit" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+                <!-- end  edit member-->
+  
+    
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+{% endblock %}  

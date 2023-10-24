@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member's Info</title>
+    <link rel="stylesheet" href="members_info.css">
+</head>
+<body>
+    
+    <div class="table">
+      <h1>Edit User Info</h1>
+     <table>
+            <thead>
+                <tr>
+                    <th>LastName</th>
+                    <th>FirstName</th>
+                    <th>MiddleName</th>
+                    <!-- <th>Blk No.</th>
+                    <th>Lot No.</th> -->
+                    <th>Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Factura</td>
+                    <td>Henry</td>
+                    <td>Qt Quitay</td>
+                    <!-- <td>6</td>
+                    <td>9</td> -->
+                    <td>
+                        <button class="btn btn-green">EDIT</button>
+                        <button class="btn red">DELETE</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>   
+    </div>
+
+
+    <dialog class="pop-up-edit">
+      <h3>Personal Information</h3>
+      <div class="personal-information">
+          <label for="given-name">Given Name
+            <input type="text" id="given-name" required>
+          </label>
+          <label for="last-name">Last Name
+              <input type="text" id="last-name" required> 
+          </label>
+          <label for="middle-name">Middle Name
+              <input type="text" id="middle-name" required>
+          </label>
+          <label for="gender">Gender
+              <select class="select" name="gender" id="gender" required>
+                  <option value="">Select</option>
+                  <option value="1">Male</option>
+                  <option value="2">Female</option>
+              </select>
+          </label> 
+      </div>
+      <h3>Property Information</h3>
+      <div class="property-information">
+        
+        <label for="id-no">ID No.
+          <input type="text" id="id-no" required>
+        </label>
+        <label for="blk-no">Block No.
+          <input type="text" id="blk-no" required>
+        </label>
+        <label for="lot-no">Lot No.
+          <input type="text" id="lot-no" required>
+        </label>
+        <label for="homelot">Homelot Area
+          <input type="text" id="homelot" required>
+        </label>
+        <label for="open-space">Open Space
+          <input type="text" id="open-space" required>
+        </label>
+        <label for="Loan">Share In Loan
+          <input type="text" id="loan" required>
+        </label>
+        <label for="PI">Principal Interest
+          <input type="text" id="PI" required>
+        </label>
+        <label for="blank">Blank.
+          <input type="text" id="blank" required>
+        </label>
+          
+      </div>
+
+      <div class="buttons">
+        <button class="close-button red">Close</button>
+        <button class="update btn-green">Update</button>
+      </div>
+        
+    </dialog>
+
+
+      
+    <script>
+      const modal = document.querySelector('.pop-up-edit');
+      const openModal = document.querySelector('.btn-green');
+      const closeModal = document.querySelector('.close-button');
+
+      openModal.addEventListener('click' ,() => {
+        modal.showModal();
+      })
+
+      closeModal.addEventListener('click' ,() => {
+        modal.close();
+      })
+    </script>
+</body>
+</html>

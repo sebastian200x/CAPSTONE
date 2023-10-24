@@ -1,0 +1,385 @@
+from flask import (
+    Flask,
+    render_template,
+    request,
+    url_for,
+    flash,
+    redirect,
+    session,
+    jsonify,
+)
+
+# from datetime import datetime
+from flask_mysqldb import MySQL
+from datetime import datetime, timedelta, date
+
+# import datetime
+
+app = Flask(__name__)
+app.secret_key = "capstone"
+
+# Database for localhost
+
+app.config["MYSQL_HOST"] = "localhost"
+app.config["MYSQL_USER"] = "root"
+app.config["MYSQL_PASSWORD"] = ""
+app.config["MYSQL_DB"] = "dbhofin"
+
+# Database for online database
+
+# app.config['MYSQL_HOST'] = 'www.db4free.net'
+# app.config['MYSQL_USER'] = 'sebastian200x'
+# app.config['MYSQL_PASSWORD'] = 'jds09122128032'
+# app.config['MYSQL_DB'] = 'dbhofin'
+# app.config['MYSQL_PORT'] = 3306
+
+
+mysql = MySQL(app)
+
+
+# session checker if logged in it will redirect to respective homepage
+def userchecker(dir):
+    is_admin = session.get("is_admin")
+    if is_admin == "yes":
+        return redirect(url_for("admin_members_reg"))
+    elif is_admin == "no":
+        return redirect(url_for("member_payment_reminder"))
+    else:
+        return render_template(dir)
+
+
+def adminredirect(dir, **args):
+    is_admin = session.get("is_admin")
+    if is_admin == "no":
+        return redirect(url_for("member_payment_reminder"))
+    else:
+        return render_template(dir, **args)
+
+
+def memberredirect(dir, **args):
+    is_admin = session.get("is_admin")
+    if is_admin == "yes":
+        return redirect(url_for("admin_members_reg"))
+    else:
+        return render_template(dir, **args)
+
+
+# username generator
+def generate_username(id):
+    now = datetime.now()
+    year_today = now.strftime("%Y")
+    username = year_today + str(id)
+    return username
+
+
+# List of Session
+@app.route("/sessions")
+def active_sessions():
+    session_data = []
+    for key, value in session.items():
+        session_data.append(f"{key}: {value}")
+    return "\n".join(session_data)
+
+
+@app.route("/")
+def index():
+    # Temporary admin creator for 1st time opened
+    create = mysql.connection.cursor()
+    create.execute("SELECT * FROM tbl_useracc WHERE is_admin='yes' AND is_deleted='no'")
+    result = create.fetchall()
+    if len(result) == 0:
+        create.execute(
+            "INSERT INTO `tbl_useracc`(`user_id`, `username`, `password`, `is_admin`, `is_deleted`) VALUES ('1','admin','admin','yes','no')"
+        )
+        create.execute(
+            "INSERT INTO `tbl_userinfo`(`userinfo_id`, `user_id`, `given_name`) VALUES ('1','1','Admin')"
+        )
+        mysql.connection.commit()
+        create.close()
+    return userchecker("index.html")
+
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    # LOGIN
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        sql = mysql.connection.cursor()
+        sql.execute(
+            "SELECT * FROM tbl_useracc WHERE username=%s AND password=%s",
+            (username, password),
+        )
+
+        result = sql.fetchall()
+        if not len(result) == 0:
+            sql.execute(
+                "SELECT * FROM tbl_useracc, tbl_userinfo WHERE tbl_useracc.username = %s AND tbl_useracc.password = %s AND tbl_useracc.user_id = tbl_userinfo.user_id",
+                (username, password),
+            )
+            info = sql.fetchone()
+            if info:
+                is_admin = info[4]
+                fullname = info[8] + " " + info[10]
+                user_id = info[0]
+                if is_admin == "yes":
+                    session.clear()
+                    session["is_admin"] = is_admin
+                    session["fullname"] = fullname
+                    session["user_id"] = user_id
+                    session["user_type"] = "ADMIN"
+                    return redirect(url_for("admin_members_reg"))
+                    # return render_template("home.html")
+
+                elif is_admin == "no":
+                    session.clear()
+                    session["is_admin"] = is_admin
+                    session["fullname"] = fullname
+                    session["user_id"] = user_id
+                    session["user_type"] = "USER"
+                    return redirect(url_for("member_payment_reminder"))
+        else:
+            # LOGIN ATTEMPT
+            login_attempts = session.get("login_attempts", 3)
+            session["login_attempts"] = max(0, login_attempts - 1)
+            login_attempts = session["login_attempts"]
+
+            # Check if the user has exceeded the maximum login attempts
+            if login_attempts == 0:
+                current_time = datetime.now()
+                new_time = current_time + timedelta(seconds=30)
+                if "last_attempt" not in session:
+                    session["last_attempt"] = new_time.strftime("%H:%M:%S")
+
+                last_attempt_time = datetime.strptime(
+                    session["last_attempt"], "%H:%M:%S"
+                ).time()
+                current_time = current_time.time()
+
+                if last_attempt_time >= current_time:
+                    time_difference = datetime.combine(
+                        datetime.min, last_attempt_time
+                    ) - datetime.combine(datetime.min, current_time)
+                    time_left = str(time_difference)
+                    session[
+                        "reminder"
+                    ] = f"Maximum login attempts exceeded. Please try again after {time_left} seconds."
+                else:
+                    session.clear()
+                    session["reminder"] = f"Wrong Username or Password, 3 tries left"
+
+            elif login_attempts == 2 or login_attempts == 1:
+                session[
+                    "reminder"
+                ] = f"Wrong Username or Password, {login_attempts} {'tries' if login_attempts == 2 else 'try'} left"
+
+    return userchecker("login.html")
+
+
+@app.route("/admin/members_reg", methods=["POST", "GET"])
+def admin_members_reg():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT user_id FROM tbl_useracc ORDER BY user_id DESC LIMIT 1")
+    last_row = cursor.fetchone()
+    if last_row:
+        next_id = last_row[0] + 1
+    else:
+        next_id = 1
+    cursor.close()
+    username = generate_username(next_id)
+
+    if request.method == "POST":
+        given_name = request.form["given_name"]
+        middle_name = request.form["middle_name"]
+        last_name = request.form["last_name"]
+        gender = request.form["gender"]
+        password = request.form["password"]
+        email = request.form["email"]
+        register = mysql.connection.cursor()
+        try:
+            register.execute(
+                """
+    INSERT INTO tbl_useracc(
+    username,
+    PASSWORD,
+    email,
+    is_admin,
+    is_deleted
+    )
+    VALUES(% s, % s, % s, % s, % s)
+                """,
+                (username, password, email, "no", "no"),
+            )
+            id = register.lastrowid
+            register.execute(
+                """
+    INSERT INTO tbl_userinfo(
+    userinfo_id,
+    user_id,
+    given_name,
+    middle_name,
+    last_name,
+    gender
+)
+VALUES(% s, % s, % s, % s, % s, % s)
+               """,
+                (id, id, given_name, middle_name, last_name, gender),
+            )
+            register.execute(
+                "INSERT INTO tbl_property (user_id, property_id) VALUES (%s, %s)",
+                (id, id),
+            )
+
+            mysql.connection.commit()
+            register.close()
+            flash("Registration successful!", "success")
+            return sessioncheck("/admin/members_face_reg", id=id)
+
+        except Exception as e:
+            mysql.connection.rollback()
+            register.close()
+            flash(
+                "Registration failed. Please try again. Error: {}".format(str(e)),
+                "error",
+            )
+
+    return adminredirect("admin/members_reg.html", username=username)
+
+
+@app.route("/admin/members_info")
+def admin_members_info():
+    # inc.execute(
+    #     "SELECT * FROM tbl_property, tbl_useracc, tbl_userinfo WHERE tbl_property.blk_no IS NULL AND tbl_property.lot_no IS NULL AND tbl_property.homelot_area IS NULL AND tbl_property.open_space IS NULL AND tbl_property.sharein_loan IS NULL AND tbl_property.principal_interest IS NULL AND tbl_property.MRI IS NULL AND tbl_property.total IS NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no';"
+    # )
+    inc = mysql.connection.cursor()
+    inc.execute(
+        """
+                SELECT
+    *
+FROM
+    tbl_userinfo,
+    tbl_useracc,
+    tbl_property
+WHERE
+    tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no' AND tbl_useracc.user_id = tbl_property.user_id AND tbl_useracc.user_id = tbl_userinfo.user_id AND(
+        tbl_property.blk_no IS NULL OR tbl_property.lot_no IS NULL OR tbl_property.homelot_area IS NULL OR tbl_property.open_space IS NULL OR tbl_property.sharein_loan IS NULL OR tbl_property.principal_interest IS NULL OR tbl_property.MRI IS NULL OR tbl_property.total IS NULL
+    )
+        """
+    )
+    inc = inc.fetchall()
+
+    complete = mysql.connection.cursor()
+    complete.execute(
+        """
+                     SELECT
+    *
+FROM
+    tbl_userinfo,
+    tbl_useracc,
+    tbl_property
+WHERE
+    tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no' AND tbl_useracc.user_id = tbl_property.user_id AND tbl_useracc.user_id = tbl_userinfo.user_id AND tbl_property.blk_no IS NOT NULL AND tbl_property.lot_no IS NOT NULL AND tbl_property.homelot_area IS NOT NULL AND tbl_property.open_space IS NOT NULL AND tbl_property.sharein_loan IS NOT NULL AND tbl_property.principal_interest IS NOT NULL AND tbl_property.MRI IS NOT NULL AND tbl_property.total IS NOT NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no'
+        """
+    )
+    complete = complete.fetchall()
+
+    return adminredirect("/admin/members_info.html", inc=inc, complete=complete)
+
+
+@app.route("/admin/payment_history", methods=["POST", "GET"])
+def admin_payment_history():
+    history = mysql.connection.cursor()
+    history.execute("SELECT * FROM tbl_transaction ORDER BY date")
+    history = history.fetchall()
+    return adminredirect("/admin/payment_history.html", history=history)
+
+
+@app.route("/admin/members_face_reg")
+def members_face_reg():
+    return adminredirect("/admin/members_reg_face.html")
+
+
+@app.route("/admin/edit_info/<int:id>")
+def admin_edit_info():
+    # inc.execute(
+    #     "SELECT * FROM tbl_property, tbl_useracc, tbl_userinfo WHERE tbl_property.blk_no IS NULL AND tbl_property.lot_no IS NULL AND tbl_property.homelot_area IS NULL AND tbl_property.open_space IS NULL AND tbl_property.sharein_loan IS NULL AND tbl_property.principal_interest IS NULL AND tbl_property.MRI IS NULL AND tbl_property.total IS NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no';"
+    # )
+    inc = mysql.connection.cursor()
+
+
+@app.route("/member/payment_reminder", methods=["POST", "GET"])
+def member_payment_reminder():
+    return sessioncheck("member/payment_reminder.html")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+
+#     #pang call nang or view nang mga data
+#     quer=mysql.connection.cursor()
+# #pang execute nang database
+#     quer.execute("SELECT * FROM tbl_userinfo")
+#     data=quer.fetchall()
+#     quer.close()
+# session
+# if "fullname" in session:
+#     fullname = session["fullname"]
+#     return render_template('home.html',users=data,userS=fullname)
+# else:
+#     return redirect(url_for("login"))
+
+
+# @app.route("/delete/<string:id_data>", methods=["GET", "POST"])
+# def delete(id_data):
+#     flash("Record Has Been Deleted Successfully")
+#     sql = mysql.connection.cursor()
+#     sql.execute("DELETE FROM tbl_userinfo WHERE userinfo_id=%s", (id_data,))
+#     mysql.connection.commit()
+#     return redirect(url_for("Home"))
+
+
+# @app.route("/payment/<int:id>", methods=["POST", "GET"])
+# def payment(id):
+#     if request.method == "POST":
+#         amount = request.form.get("amount")
+#         userid = id
+#         option = request.form.get("option")
+
+#         sql = mysql.connection.cursor()
+#         sql.execute("SELECT * FROM tbl_transaction WHERE user_id=%s", [userid])
+#         mysql.connection.commit()
+#         data = sql.fetchall()
+#         for row in data:
+#             debt = row[2]
+#             totalamt = int(debt) - int(amount)
+#             datetimenow = datetime.now()
+#             format = datetimenow.strftime("%Y-%m-%d %H:%M:%S")
+#             sql.execute(
+#                 "UPDATE tbl_transaction SET balance_debt=%s, transac_type=%s ,amount=%s,date=%s WHERE user_id=%s",
+#                 (totalamt, option, amount, format, userid),
+#             )
+#             mysql.connection.commit()
+#             sql.execute(
+#                 "UPDATE tbl_userinfo SET Total=%s WHERE user_id=%s", (totalamt, userid)
+#             )
+#             mysql.connection.commit()
+#             sql.close()
+#             return redirect(url_for("Home2"))
+#     else:
+#         return render_template("payment.html")
+
+#     # session
+#     if "username" in session:
+#         username = session["username"]
+
+#         return render_template("payment.html", users=data, userS=username)
+
+#     else:
+#         return redirect(url_for("login"))
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port="6969")

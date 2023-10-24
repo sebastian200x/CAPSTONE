@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/edit_info.css') }}">
+    {% include 'navbar.html' %}
+    <title>Edit User Info</title>
+</head>
+
+<body>
+    <!-- wrapper yung main -->
+    <h1>Register Account</h1>
+    <main>
+        <form action="/admin/user_reg" method="POST">
+            <div class="personal-information">
+                <h3>Personal Information</h3>
+                <label for="given-name">Given Name
+                    <input type="text" name="given_name" required>
+                </label>
+                <label for="last-name">Last Name
+                    <input type="text" name="last_name" required>
+                </label>
+                <label for="middle-name">Middle Name
+                    <input type="text" name="middle_name" required>
+                </label>
+                <label for="gender">Gender
+                    <select name="gender" name="gender" required>
+                        <option value="" selected>Please select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="account-information">
+                <h3>Property Info</h3>
+                <label for="username"> Username
+                    <input type="text" name="username" required>
+                </label>
+                <label for="password">Password
+                    <input type="password" name="password" required>
+                </label>
+                <label class="whole-span" for="email">Email
+                    <input type="email" name="email" required>
+                </label>
+            </div>
+            <button type="submit" class="register"
+                onclick="return confirm('Are you sure you want to register this account?')">Register</button>
+        </form>
+
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <script>
+                // Get the flash message from the page
+                const flashMessage = "{{ get_flashed_messages()[0] }}";
+                // Display the flash message as an alert
+                if (flashMessage) {
+                    alert(flashMessage);
+                }
+            </script>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </main>
+</body>
+
+</html>
