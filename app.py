@@ -214,20 +214,18 @@ def admin_members_reg():
             register.execute(
                 """
     INSERT INTO tbl_userinfo(
-    userinfo_id,
     user_id,
     given_name,
     middle_name,
     last_name,
     gender
-)
-VALUES(% s, % s, % s, % s, % s, % s)
+    )
+    VALUES( % s, % s, % s, % s, % s)
                """,
-                (id, id, given_name, middle_name, last_name, gender),
+                (id, given_name, middle_name, last_name, gender),
             )
             register.execute(
-                "INSERT INTO tbl_property (user_id, property_id) VALUES (%s, %s)",
-                (id, id),
+                "INSERT INTO tbl_property (property_id) VALUES ( %s)", (id)
             )
 
             mysql.connection.commit()
@@ -259,16 +257,21 @@ def admin_members_info():
     inc = mysql.connection.cursor()
     inc.execute(
         """
-                SELECT
-    *
-FROM
-    tbl_userinfo,
-    tbl_useracc,
-    tbl_property
-WHERE
-    tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no' AND tbl_useracc.user_id = tbl_property.user_id AND tbl_useracc.user_id = tbl_userinfo.user_id AND(
-        tbl_property.blk_no IS NULL OR tbl_property.lot_no IS NULL OR tbl_property.homelot_area IS NULL OR tbl_property.open_space IS NULL OR tbl_property.sharein_loan IS NULL OR tbl_property.principal_interest IS NULL OR tbl_property.MRI IS NULL OR tbl_property.total IS NULL
-    )
+    SELECT *
+    FROM tbl_property
+    INNER JOIN tbl_userinfo 
+    INNER JOIN tbl_useracc 
+    ON tbl_property.user_id = tbl_userinfo.user_id AND tbl_property.user_id = tbl_useracc.user_id
+    WHERE is_admin = "no" 
+        AND is_deleted = "no"
+        AND blk_no IS NULL 
+        OR lot_no IS NULL 
+        OR homelot_area IS NULL 
+        OR open_space IS NULL 
+        OR sharein_loan IS NULL 
+        OR principal_interest IS NULL 
+        OR MRI IS NULL 
+        OR total IS NULL
         """
     )
     inc = inc.fetchall()
@@ -276,14 +279,19 @@ WHERE
     complete = mysql.connection.cursor()
     complete.execute(
         """
-                     SELECT
-    *
-FROM
-    tbl_userinfo,
-    tbl_useracc,
-    tbl_property
-WHERE
-    tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no' AND tbl_useracc.user_id = tbl_property.user_id AND tbl_useracc.user_id = tbl_userinfo.user_id AND tbl_property.blk_no IS NOT NULL AND tbl_property.lot_no IS NOT NULL AND tbl_property.homelot_area IS NOT NULL AND tbl_property.open_space IS NOT NULL AND tbl_property.sharein_loan IS NOT NULL AND tbl_property.principal_interest IS NOT NULL AND tbl_property.MRI IS NOT NULL AND tbl_property.total IS NOT NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no'
+    SELECT *
+    FROM tbl_property
+    INNER JOIN tbl_userinfo 
+    INNER JOIN tbl_useracc 
+    ON tbl_property.user_id = tbl_userinfo.user_id AND tbl_property.user_id = tbl_useracc.user_id
+    WHERE blk_no IS NOT NULL
+        AND lot_no IS NOT NULL
+        AND homelot_area IS NOT NULL
+        AND open_space IS NOT NULL
+        AND sharein_loan IS NOT NULL
+        AND principal_interest IS NOT NULL
+        AND MRI IS NOT NULL
+        AND total IS NOT NULL;
         """
     )
     complete = complete.fetchall()
@@ -309,13 +317,18 @@ def admin_payment_reminder():
     remind = mysql.connection.cursor()
     remind.execute("SELECT user_id FROM `tbl_property` WHERE total IS NOT NULL")
     remind = remind.fetchall()
-    
     return adminredirect("admin/payment_reminder.html")
+
+
+# SELECT tbl_transaction.*
+# FROM tbl_property
+# JOIN tbl_transaction ON tbl_property.user_id = tbl_transaction.user_id
+# WHERE tbl_property.total IS NOT NULL
 
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
 def member_payment_reminder():
-    return sessioncheck("member/payment_reminder.html")
+    return memberredirect("member/payment_reminder.html")
 
 
 @app.route("/logout")

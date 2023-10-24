@@ -9,7 +9,6 @@
   {% include 'navbar.html' %}
 </head>
 
-
 <body>
   <h1>EDIT USER INFO</h1>
   <h2>Incomplete User Information:</h2>
@@ -26,9 +25,9 @@
       {% if inc %}
       {% for incs in inc %}
       <tr>
-        <td>{{ incs[4] }}</td>
-        <td>{{ incs[2] }}</td>
-        <td>{{ incs[3] }}</td>
+        <td>{{ incs[14] }}</td>
+        <td>{{ incs[12] }}</td>
+        <td>{{ incs[13] }}</td>
         <td>
           <button class="edit action"><i class="fa-solid fa-pen-to-square"></i> EDIT</button>
           <button class="delete action" onclick="return confirm('Are you sure you want to delete this account?')">
@@ -68,7 +67,6 @@
       </tr>
   </div>
   </table>
-
 
   <dialog class="pop-up-edit">
     <h3>Personal Information</h3>
