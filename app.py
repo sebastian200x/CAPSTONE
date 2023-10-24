@@ -293,18 +293,14 @@ def admin_payment_history():
     return adminredirect("/admin/payment_history.html", history=history)
 
 
-
 @app.route("/admin/members_face_reg")
 def members_face_reg():
     return adminredirect("/admin/members_reg_face.html")
 
 
-@app.route("/admin/edit_info/<int:id>")
-def admin_edit_info():
-    # inc.execute(
-    #     "SELECT * FROM tbl_property, tbl_useracc, tbl_userinfo WHERE tbl_property.blk_no IS NULL AND tbl_property.lot_no IS NULL AND tbl_property.homelot_area IS NULL AND tbl_property.open_space IS NULL AND tbl_property.sharein_loan IS NULL AND tbl_property.principal_interest IS NULL AND tbl_property.MRI IS NULL AND tbl_property.total IS NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no';"
-    # )
-    inc = mysql.connection.cursor()
+# @app.route("/admin/edit_info/<int:id>")
+# def admin_edit_info():
+#     inc = mysql.connection.cursor()
 
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
