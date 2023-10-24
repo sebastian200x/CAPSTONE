@@ -31,11 +31,11 @@
           <td>
             <button class="btn-remind">Remind</button>
           </td>
+          {%endfor%}
+          {% else %}
+          <td colspan="4">No Result</td>
+          {% endif %}
         </tr>
-        {%endfor%}
-        {% else %}
-        <td colspan="4">No Result</td>
-        {% endif %}
       </tbody>
     </table>
 

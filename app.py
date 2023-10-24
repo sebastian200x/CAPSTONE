@@ -306,6 +306,10 @@ def admin_payment_history():
 
 @app.route("/admin/payment_reminder", methods=["POST", "GET"])
 def admin_payment_reminder():
+    remind = mysql.connection.cursor()
+    remind.execute("SELECT user_id FROM `tbl_property` WHERE total IS NOT NULL")
+    remind = remind.fetchall()
+    
     return adminredirect("admin/payment_reminder.html")
 
 

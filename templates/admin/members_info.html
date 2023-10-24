@@ -34,11 +34,10 @@
           <button class="delete action" onclick="return confirm('Are you sure you want to delete this account?')">
             <i class='fa-solid fa-trash'></i> DELETE</button>
         </td>
-        <!-- Add more columns as per your table structure -->
+        {% endfor %}
+        {% else %}
+        <td colspan="4">No Result</td>
       </tr>
-      {% endfor %}
-      {% else %}
-      <td colspan="4">No Result</td>
       {% endif %}
     </table>
   </div>
