@@ -293,6 +293,7 @@ def admin_payment_history():
     return adminredirect("/admin/payment_history.html", history=history)
 
 
+
 @app.route("/admin/members_face_reg")
 def members_face_reg():
     return adminredirect("/admin/members_reg_face.html")
