@@ -246,6 +246,11 @@ VALUES(% s, % s, % s, % s, % s, % s)
     return adminredirect("admin/members_reg.html", username=username)
 
 
+@app.route("/admin/members_face_reg")
+def members_face_reg():
+    return adminredirect("/admin/members_reg_face.html")
+
+
 @app.route("/admin/members_info")
 def admin_members_info():
     # inc.execute(
@@ -285,6 +290,12 @@ WHERE
 
     return adminredirect("/admin/members_info.html", inc=inc, complete=complete)
 
+
+# @app.route("/admin/edit_info/<int:id>")
+# def admin_edit_info():
+#     inc = mysql.connection.cursor()
+
+
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
     history = mysql.connection.cursor()
@@ -293,14 +304,9 @@ def admin_payment_history():
     return adminredirect("/admin/payment_history.html", history=history)
 
 
-@app.route("/admin/members_face_reg")
-def members_face_reg():
-    return adminredirect("/admin/members_reg_face.html")
-
-
-# @app.route("/admin/edit_info/<int:id>")
-# def admin_edit_info():
-#     inc = mysql.connection.cursor()
+@app.route("/admin/payment_reminder", methods=["POST", "GET"])
+def admin_payment_reminder():
+    return adminredirect("admin/payment_reminder.html")
 
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
