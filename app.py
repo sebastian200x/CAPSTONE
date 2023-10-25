@@ -314,6 +314,19 @@ def admin_edit_info(id):
     
     return adminredirect("/admin/edit_info.html", info=info)
   
+@app.route("/admin/delete_info/<int:id>")
+def delete_info(id):
+    info = mysql.connection.cursor()
+    info.execute("""
+    SELECT * 
+    FROM tbl_userinfo 
+    JOIN tbl_property
+    ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
+    LIMIT 1""",(id, id))
+    
+    info = info.fetchone()
+    
+    return adminredirect("/admin/edit_info.html", info=info)
 
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
