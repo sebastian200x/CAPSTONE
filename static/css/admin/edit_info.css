@@ -1,18 +1,15 @@
-.pop-up-edit{
+main{
   width: 80%;
   background-color: #6FB9B9;
   margin: 0 auto;
   padding: 1em;
-  border-radius: 15px ;
+  border-radius: 10px ;
   /* center div */
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 
-}
-.pop-up-edit::backdrop{
-  backdrop-filter: blur(5px);
 }
 /* alam ko meron na code neto e */
 .personal-information{
@@ -26,10 +23,16 @@
 .personal-information label input ,select , .property-information label input{
   display: block;
 }
-input[type="text"] {
+
+input, select {
+  display: inline-block;
   padding: 5px 10px;
   min-width: 70%;
+  width: 90%;
+  border-radius: 5px;
+  
 }
+
 .property-information{
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -42,7 +45,7 @@ input[type="text"] {
   grid-column: span 3;
 }
 /*. buttons */
-.pop-up-edit h3, .buttons {
+main h3, .buttons {
   text-align: center;
   margin-top: 20px;
 }
