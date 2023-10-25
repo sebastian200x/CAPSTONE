@@ -185,7 +185,7 @@ def admin_members_reg():
         next_id = last_row[0] + 1
     else:
         next_id = 1
-    cursor.close()
+    last.close()
     username = generate_username(next_id)
 
     if request.method == "POST":

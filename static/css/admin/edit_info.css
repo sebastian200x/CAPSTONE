@@ -1,4 +1,11 @@
+body{
+  padding-top: 10%;
+  
+}
 
+h1{
+  text-align: center;
+}
 main{
   width: 80%;
   background-color: #6FB9B9;
