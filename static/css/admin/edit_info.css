@@ -25,11 +25,10 @@ main{
 }
 
 input, select {
-  display: inline-block;
   padding: 5px 10px;
   min-width: 70%;
-  width: 90%;
   border-radius: 5px;
+  width: 90%;
   
 }
 
