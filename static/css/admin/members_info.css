@@ -46,9 +46,6 @@ td:last-child {
 
 .delete {
     background-color: red;
-    color: white;
-    outline: none;
-    text-decoration: none;
 }
 
 .edit {
