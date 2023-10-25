@@ -11,20 +11,21 @@
 
 <body>
     <div open class="pop-up-edit">
+        {% if info %}
         <h3>Personal Information</h3>
         <div class="personal-information">
             <label for="given-name">Given Name
-                <input type="text" id="given-name" required>
+                <input type="text" id="given-name" required value="{{info[2]}}">
             </label>
             <label for="last-name">Last Name
-                <input type="text" id="last-name" required>
+                <input type="text" id="last-name" required value="{{info[3]}}">
             </label>
             <label for="middle-name">Middle Name
-                <input type="text" id="middle-name" required>
+                <input type="text" id="middle-name" required value="{{info[4]}}">
             </label>
             <label for="gender">Gender
                 <select class="select" name="gender" id="gender" required>
-                    <option value="">Select</option>
+                    <option value="{{info[2]}}">{{info[5]}}</option>
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                 </select>
@@ -64,7 +65,7 @@
             <button class="close-button red">Close</button>
             <button class="update btn-green">Update</button>
         </div>
-
+        {% endif %}
     </div>
 </body>
 
