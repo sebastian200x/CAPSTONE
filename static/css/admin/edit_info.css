@@ -21,7 +21,7 @@ main{
   border-bottom: 1px solid black;
 }
 
-.personal-information label input ,select , .property-information label input{
+.personal-information label input, select , .property-information label input{
   display: block;
 }
 
