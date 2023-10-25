@@ -1,7 +1,7 @@
+
 main{
   width: 80%;
   background-color: #6FB9B9;
-  margin: 0 auto;
   padding: 1em;
   border-radius: 10px ;
   /* center div */
@@ -9,8 +9,8 @@ main{
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
 }
+
 /* alam ko meron na code neto e */
 .personal-information{
   display: grid;
@@ -20,6 +20,7 @@ main{
   padding-bottom:10px ;
   border-bottom: 1px solid black;
 }
+
 .personal-information label input ,select , .property-information label input{
   display: block;
 }
@@ -37,9 +38,11 @@ input, select {
   grid-template-columns: repeat(6, 1fr);
   margin: 0 20px;
 }
+
 .property-information label{
   grid-column: span 2;
 }
+
 .property-information label:nth-child(4), .property-information label:nth-child(5){
   grid-column: span 3;
 }
@@ -49,6 +52,7 @@ main h3, .buttons {
   text-align: center;
   margin-top: 20px;
 }
+
 .buttons button{
   width: 10rem;
   height: 2rem;
