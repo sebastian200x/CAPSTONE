@@ -59,7 +59,8 @@
         <td>
           <a href="/admin/edit_info/{{completed[1]}}" class="edit action"><i class="fa-solid fa-pen-to-square"></i>
             EDIT</a>
-          <i class='fa-solid fa-trash'></i> DELETE</button>
+          <button class="delete action" onclick="return confirm('Are you sure you want to delete this account?')">
+            <i class='fa-solid fa-trash'></i> DELETE</button>
 
         </td>
         {% endfor %}

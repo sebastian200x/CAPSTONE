@@ -178,9 +178,9 @@ def login():
 
 @app.route("/admin/members_reg", methods=["POST", "GET"])
 def admin_members_reg():
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT user_id FROM tbl_useracc ORDER BY user_id DESC LIMIT 1")
-    last_row = cursor.fetchone()
+    last = mysql.connection.cursor()
+    last.execute("SELECT user_id FROM tbl_useracc ORDER BY user_id DESC LIMIT 1")
+    last_row = last.fetchone()
     if last_row:
         next_id = last_row[0] + 1
     else:
@@ -259,8 +259,8 @@ def admin_members_info():
         """
     SELECT *
     FROM tbl_property
-    INNER JOIN tbl_userinfo 
-    INNER JOIN tbl_useracc 
+    JOIN tbl_userinfo 
+    JOIN tbl_useracc 
     ON tbl_property.user_id = tbl_userinfo.user_id AND tbl_property.user_id = tbl_useracc.user_id
     WHERE is_admin = "no" 
         AND is_deleted = "no"
@@ -281,8 +281,8 @@ def admin_members_info():
         """
     SELECT *
     FROM tbl_property
-    INNER JOIN tbl_userinfo 
-    INNER JOIN tbl_useracc 
+    JOIN tbl_userinfo 
+    JOIN tbl_useracc 
     ON tbl_property.user_id = tbl_userinfo.user_id AND tbl_property.user_id = tbl_useracc.user_id
     WHERE blk_no IS NOT NULL
         AND lot_no IS NOT NULL
@@ -302,9 +302,18 @@ def admin_members_info():
 
 @app.route("/admin/edit_info/<int:id>")
 def admin_edit_info(id):
-    return adminredirect("/admin/edit_info.html")
+    info = mysql.connection.cursor()
+    info.execute("""
+    SELECT * 
+    FROM tbl_userinfo 
+    JOIN tbl_property
+    ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
+    LIMIT 1""",(id, id))
+    
+    info = info.fetchone()
+    
+    return adminredirect("/admin/edit_info.html", info=info)
   
-
 
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
