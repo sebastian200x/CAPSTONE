@@ -1,16 +1,16 @@
-body{
+body {
   padding-top: 10%;
 }
 
-h1{
+h1 {
   text-align: center;
 }
 
-main{
+main {
   width: 80%;
   background-color: #6FB9B9;
   padding: 1em;
-  border-radius: 10px ;
+  border-radius: 10px;
   /* center div */
   position: absolute;
   left: 50%;
@@ -19,73 +19,80 @@ main{
 }
 
 /* alam ko meron na code neto e */
-.personal-information{
+.personal-information {
   display: grid;
-  grid-template-columns: 1fr 1fr;   
+  grid-template-columns: 1fr 1fr;
   margin: 0 20px;
   row-gap: 10px;
-  padding-bottom:10px ;
+  padding-bottom: 10px;
   border-bottom: 1px solid black;
 }
 
-.personal-information label input, select , .property-information label input{
+.personal-information label input,
+select,
+.property-information label input {
   display: block;
 }
 
-input, select {
+input,
+select {
   padding: 5px 10px;
   min-width: 70%;
   border-radius: 5px;
   width: 90%;
-  
 }
 
-.property-information{
+.property-information {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   margin: 0 20px;
 }
 
-.property-information label{
+.property-information label {
   grid-column: span 2;
 }
 
 
 /*. buttons */
-main h3, .buttons {
+main h3,
+.buttons {
   text-align: center;
   margin-top: 20px;
 }
 
-button{
+button {
   width: 10rem;
   height: 2rem;
   border-radius: 5px;
 }
 
-.close{
+.close {
   background-color: rgb(88, 88, 88);
 }
 
-.update{
+.update {
   background-color: rgb(0, 192, 0);
 }
 
-a{
+a {
   color: white;
   text-decoration: none;
 }
+
 /* responsive */
 @media screen and (max-width:500px) {
 
-  .personal-information, .property-information{
-      grid-template-columns: 1fr;
+  .personal-information,
+  .property-information {
+    grid-template-columns: 1fr;
   }
-  .buttons{
-      display: flex; 
-      justify-content:space-evenly;
+
+  .buttons {
+    display: flex;
+    justify-content: space-evenly;
   }
-  .buttons button{
-      width: 100px;
+
+  .buttons button {
+    width: 100px;
   }
 }
