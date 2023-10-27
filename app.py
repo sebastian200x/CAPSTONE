@@ -309,7 +309,7 @@ def admin_edit_info(id):
     JOIN tbl_property
     ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
     LIMIT 1""",(id, id))
-    
+
     info = info.fetchone()
     
     return adminredirect("/admin/edit_info.html", info=info)
@@ -324,8 +324,52 @@ def delete_info(id):
     ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
     LIMIT 1""",(id, id))
     
-    info = info.fetchone()
+    return adminredirect("/admin/edit_info.html")
+
+# @app.route("/admin/update_info/<int:id>")
+# def delete_info(id):
     
+#     try:
+#         # Get the data from the request
+#         given_name = request.form["given_name"]
+#         middle_name = request.form["middle_name"]
+#         last_name = request.form["last_name"]
+#         gender = request.form["gender"]
+#         password = request.form["password"]
+#         email = request.form["email"]
+
+
+#         update = mysql.connection.cursor()
+#         update.execute("""
+#         SELECT * 
+#         FROM tbl_userinfo 
+#         JOIN tbl_property
+#         ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
+#         LIMIT 1""",(id, id))
+        
+#         update.execute(
+#         """
+#         UPDATE tbl_property
+#         SET property_id = %s,
+#             user_id = %s,
+#             id_no = %s,
+#             blk_no = %s,
+#             lot_no = %s,
+#             homelot_area = %s,
+#             open_space = %s,
+#             sharein_loan = %s,
+#             principal_interest = %s,
+#             MRI = %s,
+#             total = %s,
+#         WHERE user_id = %s,""", (id))
+        
+#         mysql.connection.commit()
+#         update.close()
+        
+#     except Exception as e:
+#         # Return an error response if an exception occurs
+#         return jsonify({'error': str(e)})
+
     return adminredirect("/admin/edit_info.html", info=info)
 
 @app.route("/admin/payment_history", methods=["POST", "GET"])

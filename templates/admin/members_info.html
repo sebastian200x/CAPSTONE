@@ -24,9 +24,9 @@
       {% if inc %}
       {% for incs in inc %}
       <tr>
-        <td>{{ incs[14] }}</td>
-        <td>{{ incs[12] }}</td>
+        <td>{{ incs[15] }}</td>
         <td>{{ incs[13] }}</td>
+        <td>{{ incs[14] }}</td>
         <td>
           <button class="edit action">
             <a class="" href="/admin/edit_info/{{incs[1]}}">
@@ -59,8 +59,8 @@
       {% for completed in complete %}
       <tr>
         <td>{{ completed[14] }}</td>
-        <td>{{ completed[12] }}</td>
         <td>{{ completed[13] }}</td>
+        <td>{{ completed[14] }}</td>
         <td>
           <button class="edit action">
             <a href="/admin/edit_info/{{completed[1]}}">
@@ -71,7 +71,6 @@
             <a href="/admin/delete_info/{{completed[1]}}">
               <i class='fa-solid fa-trash'></i> DELETE</a>
           </button>
-
         </td>
         {% endfor %}
         {% else %}

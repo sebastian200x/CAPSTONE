@@ -52,6 +52,7 @@ input, select {
 
 .property-information label:nth-child(4), .property-information label:nth-child(5){
   grid-column: span 3;
+  
 }
 
 /*. buttons */
@@ -60,12 +61,27 @@ main h3, .buttons {
   margin-top: 20px;
 }
 
-.buttons button{
+button{
   width: 10rem;
   height: 2rem;
+  border-radius: 5px;
+}
+
+.close{
+  background-color: gray;
+}
+
+.update{
+  background-color: green;
+}
+
+a{
+  color: white;
+  text-decoration: none;
 }
 /* responsive */
 @media screen and (max-width:500px) {
+
   .personal-information, .property-information{
       grid-template-columns: 1fr;
   }
@@ -75,5 +91,5 @@ main h3, .buttons {
   }
   .buttons button{
       width: 100px;
-  }    
+  }
 }
