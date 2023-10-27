@@ -1,11 +1,11 @@
 body{
   padding-top: 10%;
-  
 }
 
 h1{
   text-align: center;
 }
+
 main{
   width: 80%;
   background-color: #6FB9B9;
@@ -50,10 +50,6 @@ input, select {
   grid-column: span 2;
 }
 
-.property-information label:nth-child(4), .property-information label:nth-child(5){
-  grid-column: span 3;
-  
-}
 
 /*. buttons */
 main h3, .buttons {
@@ -68,11 +64,11 @@ button{
 }
 
 .close{
-  background-color: gray;
+  background-color: rgb(88, 88, 88);
 }
 
 .update{
-  background-color: green;
+  background-color: rgb(0, 192, 0);
 }
 
 a{
