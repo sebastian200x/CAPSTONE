@@ -10,8 +10,13 @@ h1 {
     padding: 15px 0;
 }
 
-h4 {
+h3 {
     padding-bottom: 15px;
+    text-align: left;
+}
+
+label{
+    padding: 5px 0;
 }
 
 .container {
@@ -25,7 +30,6 @@ h4 {
     align-items: center;
     border-radius: 5px;
 }
-
 
 .container input {
     width: 80%;
