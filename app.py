@@ -306,7 +306,6 @@ def admin_members_info():
     return adminredirect("/admin/members_info.html", inc=inc, complete=complete)
 
 
-
 @app.route("/admin/edit_info/<int:id>")
 def admin_edit_info(id):
     info = mysql.connection.cursor()
@@ -325,9 +324,6 @@ def admin_edit_info(id):
     return adminredirect("/admin/edit_info.html", info=info)
 
 
-
-
-
 @app.route("/admin/update_info/<int:id>", methods=["POST", "GET"])
 def update_info(id):
     given_name = request.form.get("given_name")
@@ -340,7 +336,9 @@ def update_info(id):
     homelot_area = request.form.get("homelot_area")  # Define homelot_area
     open_space = request.form.get("open_space")
     sharein_loan = request.form.get("sharein_loan")  # Define sharein_loan
-    principal_interest = request.form.get("principal_interest")  # Define principal_interest
+    principal_interest = request.form.get(
+        "principal_interest"
+    )  # Define principal_interest
     MRI = request.form.get("MRI")
     total = request.form.get("total")
     update = mysql.connection.cursor()
@@ -382,19 +380,20 @@ def update_info(id):
                 principal_interest,
                 MRI,
                 total,
-                id
-            )
+                id,
+            ),
         )
 
         mysql.connection.commit()
         update.close()
-        
+
         flash("Account updated successfully!", "success")
-        
+
     except Exception as e:
         flash(f"Error updating account: {str(e)}", "error")
 
     return redirect(url_for("admin_members_info"))
+
 
 @app.route("/admin/delete_info/<int:id>")
 def delete_info(id):
@@ -411,6 +410,7 @@ def delete_info(id):
 
     return adminredirect("/admin/edit_info.html")
 
+
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
     history = mysql.connection.cursor()
@@ -422,9 +422,16 @@ def admin_payment_history():
 @app.route("/admin/payment_reminder", methods=["POST", "GET"])
 def admin_payment_reminder():
     remind = mysql.connection.cursor()
-    remind.execute("SELECT user_id FROM `tbl_property` WHERE total IS NOT NULL")
+    remind.execute(
+        """
+    SELECT tbl_property.*, tbl_userinfo.*
+    FROM tbl_property
+    LEFT JOIN tbl_userinfo ON tbl_property.user_id = tbl_userinfo.user_id
+    WHERE tbl_property.user_id NOT IN (SELECT user_id FROM tbl_transaction)
+                   """
+    )
     remind = remind.fetchall()
-    return adminredirect("admin/payment_reminder.html")
+    return adminredirect("admin/payment_reminder.html", remind=remind)
 
 
 # SELECT tbl_transaction.*

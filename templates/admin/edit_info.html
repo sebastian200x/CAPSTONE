@@ -10,27 +10,10 @@
 </head>
 
 <body>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <script>
-            // Get the flash message from the page
-            const flashMessage = "{{ get_flashed_messages()[0] }}";
-            // Display the flash message as an alert
-            if (flashMessage) {
-                alert(flashMessage);
-            }
-        </script>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-
-    <h1>EDIT USER INFO</h1>
-    <main>
-        {% if info %}
-        <form method="POST" action="/admin/update_info/{{info[1]}}">
+    <form method="POST">
+        <main>
+            {% if info %}
+            <h1>EDIT USER INFO</h1>
             <h3>Personal Information</h3>
             <div class="personal-information">
                 <label for="given_name">Given Name
@@ -102,20 +85,20 @@
                     <input type="text" id="total" name="total" required
                         value="{% if info[15] is none %}""{% else %}{{ info[15] }}{% endif %}">
                 </label>
-
             </div>
 
             <div class="buttons">
-                <button class="close"><a href="/admin/members_info">Close</a></button>
-                <button class="update" type="submit">Update</button>
+                <a class="close button" href="/admin/members_info">Close</a>
+                <a class="update button" href="/admin/update_info/{{info[1]}}"
+                    onclick="return confirm('Are you sure you want to update this info?')"> Update</a>
+                {% else %}
+                <h1>Wrong User ID. Please Go Back</h1>
+                <a class="back button" href="/admin/members_info">Back</a>
+                {% endif %}
             </div>
-            {% endif %}
-        </form>
-    </main>
-    
-</body>
 
-</html>
+        </main>
+    </form>
 </body>
 
 </html>

@@ -44,25 +44,23 @@ td:last-child {
     width: 20%;
 }
 
-.delete {
-    background-color: red;
-}
-
-.edit {
-    background-color: green;
-}
-a{
+.button {
+    display: inline-block;
+    padding: 5px 10px;
     color: white;
-    outline: none;
     text-decoration: none;
-}
-
-.action {
-    padding: 3%;
-    width: auto;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    border-radius: 4px;
+    border: 1px #000 solid
+  }
+  
+  .edit {
+    background-color: rgb(0, 192, 0);
+  }
+  
+  .delete {
+    background-color: rgb(255, 66, 66);
+  }
+  
 
 
 /* responsive */
