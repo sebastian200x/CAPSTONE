@@ -446,15 +446,15 @@ def admin_payment_reminder():
 
 @app.route("/admin/payment_remind/<int:id>", methods=["POST", "GET"])
 def admin_payment_remind(id):
-    # remind = mysql.connection.cursor()
-    # remind.execute(
-    #     """
-    #     SELECT total FROM tbl_property WHERE user_id = %s 
-    #     """,
-    #     (id),
-    # )
-
-    # remind = remind.fetchone()
+    remind = mysql.connection.cursor()
+    remind.execute(
+        """
+    SELECT total 
+    FROM tbl_property 
+    WHERE user_id = %s
+    LIMIT 1""",
+        (id,),
+    )
     return adminredirect("admin/payment_remind.html")
 
 
