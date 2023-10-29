@@ -44,15 +44,10 @@
         <td>{{ incs[13] }}</td>
         <td>{{ incs[14] }}</td>
         <td>
-          <button class="edit action">
-            <a class="" href="/admin/edit_info/{{incs[1]}}">
+            <a class="edit button" href="/admin/edit_info/{{incs[1]}}">
               <i class="fa-solid fa-pen-to-square"></i> EDIT</a>
-          </button>
-          <button class="delete action" onclick="return confirm('Are you sure you want to delete this account?')">
-
-            <a href="/admin/delete_info/{{incs[1]}}">
+            <a class="delete button" href="/admin/delete_info/{{incs[1]}}" onclick="return confirm('Are you sure you want to delete this account?')">
               <i class='fa-solid fa-trash'></i> DELETE</a>
-          </button>
         </td>
       </tr>
       {% endfor %}
@@ -74,7 +69,7 @@
       {% if complete %}
       {% for completed in complete %}
       <tr>
-        <td>{{ completed[14] }}</td>
+        <td>{{ completed[15] }}</td>
         <td>{{ completed[13] }}</td>
         <td>{{ completed[14] }}</td>
         <td>

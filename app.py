@@ -424,15 +424,29 @@ def admin_payment_reminder():
     remind = mysql.connection.cursor()
     remind.execute(
         """
-    SELECT tbl_property.*, tbl_userinfo.*
-    FROM tbl_property
-    LEFT JOIN tbl_userinfo ON tbl_property.user_id = tbl_userinfo.user_id
-    WHERE tbl_property.user_id NOT IN (SELECT user_id FROM tbl_transaction)
-                   """
+        SELECT
+            tbl_property.*,
+            tbl_userinfo.*
+        FROM
+            tbl_property
+        LEFT JOIN tbl_userinfo ON tbl_property.user_id = tbl_userinfo.user_id
+        LEFT JOIN tbl_useracc ON tbl_property.user_id = tbl_useracc.user_id
+        WHERE
+            tbl_property.user_id NOT IN(
+            SELECT
+                user_id
+            FROM
+                tbl_transaction
+        ) AND tbl_property.total IS NOT NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no'  
+        """
     )
     remind = remind.fetchall()
     return adminredirect("admin/payment_reminder.html", remind=remind)
 
+@app.route("/admin/payment_remind/<int:id>", methods=["POST", "GET"])
+def admin_payment_remind(id):
+    
+    return adminredirect("admin/payment_remind.html")
 
 # SELECT tbl_transaction.*
 # FROM tbl_property

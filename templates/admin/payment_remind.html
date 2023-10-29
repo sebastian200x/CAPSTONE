@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Reminder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/payment_remind.css') }}">
+    {% include 'navbar.html' %}
+</head>
+
+<body>
+    <div class="container">
+        <h1>Payment Reminder</h1>
+
+        <h4>Name: </h4>
+
+        <label for="deadline">Deadline:</label>
+        <input type="deadline" id="deadline" placeholder="Date of deadline">
+
+        <label for="amount">Amount:</label>
+        <input type="amount" id="amount" placeholder="Amount to be paid">
+
+        <a class="buton remind" href="#">Remind</a>
+    </div>
+</body>
+
+</html>
