@@ -306,6 +306,7 @@ def admin_members_info():
     return adminredirect("/admin/members_info.html", inc=inc, complete=complete)
 
 
+
 @app.route("/admin/edit_info/<int:id>")
 def admin_edit_info(id):
     info = mysql.connection.cursor()
@@ -324,6 +325,77 @@ def admin_edit_info(id):
     return adminredirect("/admin/edit_info.html", info=info)
 
 
+
+
+
+@app.route("/admin/update_info/<int:id>", methods=["POST", "GET"])
+def update_info(id):
+    given_name = request.form.get("given_name")
+    middle_name = request.form.get("middle_name")
+    last_name = request.form.get("last_name")
+    gender = request.form.get("gender")
+    id_no = request.form.get("id_no")
+    blk_no = request.form.get("blk_no")
+    lot_no = request.form.get("lot_no")
+    homelot_area = request.form.get("homelot_area")  # Define homelot_area
+    open_space = request.form.get("open_space")
+    sharein_loan = request.form.get("sharein_loan")  # Define sharein_loan
+    principal_interest = request.form.get("principal_interest")  # Define principal_interest
+    MRI = request.form.get("MRI")
+    total = request.form.get("total")
+    update = mysql.connection.cursor()
+
+    try:
+        update.execute(
+            """
+            UPDATE tbl_userinfo
+            SET given_name = %s,
+                middle_name = %s,
+                last_name = %s,
+                gender = %s
+            WHERE user_id = %s
+            """,
+            (given_name, middle_name, last_name, gender, id),
+        )
+
+        update.execute(
+            """
+            UPDATE tbl_property
+            SET id_no = %s,
+                blk_no = %s,
+                lot_no = %s,
+                homelot_area = %s,
+                open_space = %s,
+                sharein_loan = %s,
+                principal_interest = %s,
+                MRI = %s,
+                total = %s
+            WHERE user_id = %s
+            """,
+            (
+                id_no,
+                blk_no,
+                lot_no,
+                homelot_area,
+                open_space,
+                sharein_loan,
+                principal_interest,
+                MRI,
+                total,
+                id
+            )
+        )
+
+        mysql.connection.commit()
+        update.close()
+        
+        flash("Account updated successfully!", "success")
+        
+    except Exception as e:
+        flash(f"Error updating account: {str(e)}", "error")
+
+    return redirect(url_for("admin_members_info"))
+
 @app.route("/admin/delete_info/<int:id>")
 def delete_info(id):
     info = mysql.connection.cursor()
@@ -338,80 +410,6 @@ def delete_info(id):
     )
 
     return adminredirect("/admin/edit_info.html")
-
-
-@app.route("/admin/update_info/<int:id>", methods=["POST", "GET"])
-def update_info(id):
-    if request.method == "POST":
-        # Get the data from the request
-        given_name = request.form["given_name"]
-        middle_name = request.form["middle_name"]
-        last_name = request.form["last_name"]
-        gender = request.form["gender"]
-
-        id_no = request.form["id_no"]
-        blk_no = request.form["blk_no"]
-        lot_no = request.form["lot_no"]
-        homelot = request.form["homelot"]
-        open_space = request.form["open_space"]
-        loan = request.form["loan"]
-        PI = request.form["PI"]
-        MRI = request.form["MRI"]
-        total = request.form["total"]
-        update = mysql.connection.cursor()
-        try:
-            update.execute(
-                """
-            UPDATE tbl_property
-            SET given_name = %s,
-                middle_name = %s,
-                last_name = %s,
-                gender = %s
-            WHERE user_id = %s,""",
-                (given_name, middle_name, last_name, gender, id),
-            )
-
-            update.execute(
-                """
-            UPDATE tbl_property
-            SET id_no = %s,
-                blk_no = %s,
-                lot_no = %s,
-                homelot_area = %s,
-                open_space = %s,
-                sharein_loan = %s,
-                principal_interest = %s,
-                MRI = %s,
-                total = %s
-            WHERE user_id = %s,""",
-                (
-                    id_no,
-                    blk_no,
-                    lot_no,
-                    homelot_area,
-                    open_space,
-                    sharein_loan,
-                    principal_interest,
-                    MRI,
-                    total,
-                    id
-                ),
-            )
-            mysql.connection.commit()
-
-            update.close()
-            flash("Account updated successfully!", "success")
-            
-        except Exception as e:
-            mysql.connection.rollback()
-            update.close()
-            flash(
-                "Update failed. Please try again. Error: {}".format(str(e)),
-                "error",
-            )
-            
-    return redirect(url_for("/admin/update_info/id"))
-
 
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():

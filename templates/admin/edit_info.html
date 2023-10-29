@@ -10,11 +10,27 @@
 </head>
 
 <body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <script>
+            // Get the flash message from the page
+            const flashMessage = "{{ get_flashed_messages()[0] }}";
+            // Display the flash message as an alert
+            if (flashMessage) {
+                alert(flashMessage);
+            }
+        </script>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
     <h1>EDIT USER INFO</h1>
     <main>
         {% if info %}
         <form method="POST" action="/admin/update_info/{{info[1]}}">
-
             <h3>Personal Information</h3>
             <div class="personal-information">
                 <label for="given_name">Given Name
@@ -62,20 +78,20 @@
                     <input type="text" id="lot_no" name="lot_no" required
                         value="{% if info[10] is none %}""{% else %}{{ info[10] }}{% endif %}">
                 </label>
-                <label for="homelot">Homelot Area
-                    <input type="text" id="homelot" name="homelot" required
+                <label for="homelot_area">Homelot Area
+                    <input type="text" id="homelot_area" name="homelot_area" required
                         value="{% if info[11] is none %}""{% else %}{{ info[11] }}{% endif %}">
                 </label>
                 <label for="open_space">Open Space
                     <input type="text" id="open_space" name="open_space" required
                         value="{% if info[12] is none %}""{% else %}{{ info[12] }}{% endif %}">
                 </label>
-                <label for="loan">Share In Loan
-                    <input type="text" id="loan" name="loan" required
+                <label for="sharein_loan">Share In Loan
+                    <input type="text" id="sharein_loan" name="sharein_loan" required
                         value="{% if info[13] is none %}""{% else %}{{ info[13] }}{% endif %}">
                 </label>
-                <label for="PI">Principal Interest
-                    <input type="text" id="PI" name="PI" required
+                <label for="principal_interest">Principal Interest
+                    <input type="text" id="principal_interest" name="principal_interest" required
                         value="{% if info[14] is none %}""{% else %}{{ info[14] }}{% endif %}">
                 </label>
                 <label for="MRI">MRI
@@ -96,22 +112,7 @@
             {% endif %}
         </form>
     </main>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <script>
-            // Get the flash message from the page
-            const flashMessage = "{{ get_flashed_messages()[0] }}";
-            // Display the flash message as an alert
-            if (flashMessage) {
-                alert(flashMessage);
-            }
-        </script>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+    
 </body>
 
 </html>
