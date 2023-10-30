@@ -455,7 +455,8 @@ def admin_payment_remind(id):
     LIMIT 1""",
         (id,),
     )
-    return adminredirect("admin/payment_remind.html")
+    
+    return adminredirect("admin/payment_remind.html" , remind=remind)
 
 
 # SELECT tbl_transaction.*
@@ -463,6 +464,18 @@ def admin_payment_remind(id):
 # JOIN tbl_transaction ON tbl_property.user_id = tbl_transaction.user_id
 # WHERE tbl_property.total IS NOT NULL
 
+@app.route("/admin/payment_remind/remind/<int:id>", methods=["POST", "GET"])
+def admin_payment_remind_remind(id):
+    remind = mysql.connection.cursor()
+    remind.execute(
+        """
+    SELECT total 
+    FROM tbl_property 
+    WHERE user_id = %s
+    LIMIT 1""",
+        (id,),
+    )
+    return adminredirect("admin/payment_remind.html" , remind=remind)
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
 def member_payment_reminder():

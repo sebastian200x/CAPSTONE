@@ -12,17 +12,35 @@
 <body>
     <div class="container">
         <h1>Payment Reminder</h1>
+        {% if remind %}
+        {% for reminds in remind %}
 
         <h3 class="name">Name: </h3>
 
         <label for="deadline">Deadline:</label>
-        <input type="date" id="deadline" placeholder="Date of deadline">
+        <input type="date" id="deadline" name="deadline" placeholder="Date of deadline">
 
         <label for="amount">Amount:</label>
-        <input type="number" id="amount" placeholder="Amount to be paid">
-
+        <input type="text" id="amount" name="amount" placeholder="Amount to be paid" value="₱ {{reminds[0]}}" disabled>
+        <!-- <span>&#8369;</span> -->
         <a class="buton remind" href="#">Remind</a>
+        {% endfor %}
+        {% endif %}
     </div>
 </body>
 
 </html>
+
+<script>
+    // Get the current date
+    var currentDate = new Date();
+
+    // Add 1 month to the current date
+    var newDate = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+
+    // Format the new date as "YYYY-MM-DD"
+    var formattedDate = newDate.toISOString().split('T')[0];
+
+    // Set the default value of the input field to the new date
+    document.getElementById("deadline").value = formattedDate;
+</script>
