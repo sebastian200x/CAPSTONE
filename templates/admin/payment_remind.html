@@ -11,23 +11,24 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>Payment Reminder</h1>
-        {% if remind %}
-        {% for reminds in remind %}
+    {% if remind %}
+    {% for reminds in remind %}
+    <form action="/admin/payment_remind/remind/{{reminds[0]}}" method="POST" class="container">
+            <h1>Payment Reminder</h1>
+            <h3 class="name">Name: {{reminds[5]}} {{reminds[3]}}, {{reminds[4]}}</h3>
+            
+            <label for="deadline">Deadline:</label>
+            <input type="date" id="deadline" name="deadline" placeholder="Date of deadline">
 
-        <h3 class="name">Name: </h3>
+            <label for="amount">Amount:</label>
+            <span class="currency-code">₱ <input type="number" id="amount" name="amount" /></span>
 
-        <label for="deadline">Deadline:</label>
-        <input type="date" id="deadline" name="deadline" placeholder="Date of deadline">
+            <input type="submit" class="buton remind" value="Remind">
+    </form>
+    {% endfor %}
+    {% endif %}
 
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="amount" placeholder="Amount to be paid" value="₱ {{reminds[0]}}" disabled>
-        <!-- <span>&#8369;</span> -->
-        <a class="buton remind" href="/admin/payment_remind/remind/5">Remind</a>
-        {% endfor %}
-        {% endif %}
-    </div>
+
 </body>
 
 </html>

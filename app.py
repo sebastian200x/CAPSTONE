@@ -262,7 +262,7 @@ def members_face_reg():
     return adminredirect("/admin/members_reg_face.html")
 
 
-@app.route("/admin/members_info")
+@app.route("/admin/members_info", methods=["POST", "GET"])
 def admin_members_info():
     # inc.execute(
     #     "SELECT * FROM tbl_property, tbl_useracc, tbl_userinfo WHERE tbl_property.blk_no IS NULL AND tbl_property.lot_no IS NULL AND tbl_property.homelot_area IS NULL AND tbl_property.open_space IS NULL AND tbl_property.sharein_loan IS NULL AND tbl_property.principal_interest IS NULL AND tbl_property.MRI IS NULL AND tbl_property.total IS NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no';"
@@ -339,65 +339,79 @@ def update_info(id):
     id_no = request.form.get("id_no")
     blk_no = request.form.get("blk_no")
     lot_no = request.form.get("lot_no")
-    homelot_area = request.form.get("homelot_area")  # Define homelot_area
+    homelot_area = request.form.get("homelot_area")
     open_space = request.form.get("open_space")
-    sharein_loan = request.form.get("sharein_loan")  # Define sharein_loan
-    principal_interest = request.form.get(
-        "principal_interest"
-    )  # Define principal_interest
+    sharein_loan = request.form.get("sharein_loan")
+    principal_interest = request.form.get("principal_interest")
     MRI = request.form.get("MRI")
     total = request.form.get("total")
     update = mysql.connection.cursor()
-
     try:
-        update.execute(
-            """
-            UPDATE tbl_userinfo
-            SET given_name = %s,
-                middle_name = %s,
-                last_name = %s,
-                gender = %s
-            WHERE user_id = %s
-            """,
-            (given_name, middle_name, last_name, gender, id),
-        )
-
-        update.execute(
-            """
-            UPDATE tbl_property
-            SET id_no = %s,
-                blk_no = %s,
-                lot_no = %s,
-                homelot_area = %s,
-                open_space = %s,
-                sharein_loan = %s,
-                principal_interest = %s,
-                MRI = %s,
-                total = %s
-            WHERE user_id = %s
-            """,
-            (
-                id_no,
-                blk_no,
-                lot_no,
-                homelot_area,
-                open_space,
-                sharein_loan,
-                principal_interest,
-                MRI,
-                total,
-                id,
-            ),
-        )
-
-        mysql.connection.commit()
-        update.close()
-
-        flash("Account updated successfully!", "success")
-
+        if (
+            given_name
+            and last_name
+            and gender
+            and id_no
+            and blk_no
+            and lot_no
+            and homelot_area
+            and open_space
+            and sharein_loan
+            and principal_interest
+            and MRI
+            and total
+        ):
+            update.execute(
+                """
+                UPDATE tbl_userinfo
+                SET given_name = %s,
+                    middle_name = %s,
+                    last_name = %s,
+                    gender = %s
+                WHERE user_id = %s
+                """,
+                (
+                    given_name,
+                    middle_name,
+                    last_name,
+                    gender,
+                    id,
+                ),
+            )
+            update.execute(
+                """
+                UPDATE tbl_property
+                SET id_no = %s,
+                    blk_no = %s,
+                    lot_no = %s,
+                    homelot_area = %s,
+                    open_space = %s,
+                    sharein_loan = %s,
+                    principal_interest = %s,
+                    MRI = %s,
+                    total = %s
+                WHERE user_id = %s
+                """,
+                (
+                    id_no,
+                    blk_no,
+                    lot_no,
+                    homelot_area,
+                    open_space,
+                    sharein_loan,
+                    principal_interest,
+                    MRI,
+                    total,
+                    id,
+                ),
+            )
+            mysql.connection.commit()
+            update.close()
+            flash("Account updated successfully!", "success")
+        else:
+            flash("Please fill all required fields.", "error")
     except Exception as e:
         flash(f"Error updating account: {str(e)}", "error")
-
     return redirect(url_for("admin_members_info"))
 
 
@@ -455,11 +469,12 @@ def admin_payment_remind(id):
     remind = mysql.connection.cursor()
     remind.execute(
         """
-    SELECT total 
-    FROM tbl_property 
-    WHERE user_id = %s
-    LIMIT 1""",
-        (id,),
+    SELECT tbl_property.total, tbl_userinfo.*
+    FROM tbl_property
+    LEFT JOIN tbl_userinfo ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
+    LIMIT 1;
+        """,
+        (id,id,),
     )
     return adminredirect("admin/payment_remind.html", remind=remind)
 
@@ -472,7 +487,7 @@ def admin_payment_remind(id):
 
 @app.route("/admin/payment_remind/remind/<int:id>", methods=["POST", "GET"])
 def admin_payment_remind_remind(id):
-    return adminredirect("admin/payment_remind.html")
+    return adminredirect("admin/payment_reminder.html")
 
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
