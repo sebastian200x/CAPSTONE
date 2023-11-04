@@ -6,11 +6,11 @@
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
 
 <nav class="navbar">
-  {% if "is_admin" is not in session%}
+  {% if request.path == '/login' or request.path == '/'%}
+  <!--  or request.path == '/member/payment_verification' -->
   <a href="#" class="btn disabled">&#8801;</a>
   {% else %}
   <a href="#sidenav" class="btn open">&#8801;</a>
-  {% endif %}
   <div class="sidenav" id="sidenav">
     <ul>
       <li class="center user">
@@ -44,14 +44,16 @@
       <li class="item {% if request.path == '/member/payment_history' %}active{% endif %}"><a
           href="/member/payment_history"><i class="fa-solid fa-money-check-dollar"></i> Payment
           History</a></li>
-      <li class="item {% if request.path == '/member/payment_verification' %}active{% else %}disabled{% endif %}"><a
+      <li class="item restrict {% if request.path == '/member/payment_verification' %}active{% endif %}"><a
           href="/member/payment_verification"><i class="fa-solid fa-face-smile"></i>
           Payment Verification</a></li>
-      <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+      <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Logout </a></li>
       {% endif %}
     </ul>
   </div>
   <a href="#!" class="close sidenav-overlay"></a>
+  {% endif %}
+
   <a class="navbar-brand" href="/">
     <img src="{{ url_for('static', filename='images/logo-s.png') }}" alt="logo-s" class="navbar-img" />
     HOA Finance

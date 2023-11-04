@@ -29,11 +29,7 @@
     cursor: default;
 }
 
-.disabled {
-    color: #8e8e8e;
-    cursor: not-allowed;
-    pointer-events: none;
-}
+
 
 #sidenav {
     width: 80%;
@@ -141,6 +137,20 @@ ul {
     background: rgba(0, 0, 0, .1);
 }
 
+.restrict:hover a {
+    cursor: not-allowed;
+}
+.restrict a{
+    pointer-events: none;
+
+}
+
+
+.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    color: #575757
+}
 
 /* .footer {
     position: absolute;
@@ -189,7 +199,7 @@ ul {
     height: 40px;
     width: 40px;
     margin-right: 10px;
-} 
+}
 
 .navbar-toggler {
     border: none;
@@ -206,6 +216,7 @@ ul {
     margin-left: auto;
     color: #fff
 }
+
 /* Full screen sidenav when in phone */
 /* @media screen and (max-width: 768px) {
     #sidenav {

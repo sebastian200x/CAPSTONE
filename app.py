@@ -549,7 +549,7 @@ def member_payment_history():
 
 @app.route("/member/payment_verification")
 def payment_verification():
-    return memberredirect("payment_verification.html")
+    return memberredirect("/member/payment_verification.html")
 
 
 
