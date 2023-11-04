@@ -418,7 +418,9 @@ def delete_info(id):
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
     history = mysql.connection.cursor()
-    history.execute("SELECT * FROM tbl_transaction ORDER BY date")
+    history.execute(
+        "SELECT * FROM tbl_transaction WHERE transc_type != 'reminder' ORDER BY date"
+    )
     history = history.fetchall()
     return adminredirect("/admin/payment_history.html", history=history)
 
@@ -501,15 +503,15 @@ def admin_payment_remind_remind(id):
             due_conv,
         ),
     )
-    mysql.connection.commit()  # Commit the changes to the database
-    reminding.close()  # Close the cursor
+    mysql.connection.commit()
+    reminding.close()
     return redirect(url_for("admin_payment_reminder"))
 
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
 def member_payment_reminder():
     remind = mysql.connection.cursor()
-    user_id = session['user_id']
+    user_id = session["user_id"]
     remind.execute(
         """
         
@@ -522,7 +524,7 @@ def member_payment_reminder():
         ;
         
         """,
-        (user_id,)
+        (user_id,),
     )
     remind = remind.fetchone()
 

@@ -69,3 +69,14 @@ input:focus {
   box-shadow: 2px 2px 5px black;
 
 }
+
+@media only screen and (max-width: 768px) {
+  main {
+    margin: 0 20px;
+  }
+
+  .personal-information,
+  .account-information {
+    grid-template-columns: 1fr;
+  }
+}

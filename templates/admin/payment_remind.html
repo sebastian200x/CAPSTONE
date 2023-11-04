@@ -22,10 +22,10 @@
         <input type="submit" class="buton remind" value="Remind">
     </form>
     {% else %}
-    <form action="/admin/payment_reminder" method="POST" class="container">
-        <h1>No User ID Found. Please Go Back</h1>
-        <input type="submit" class="buton back" value="Back">
-    </form>
+    <script>
+        alert("User ID not found")
+        window.location.href = "{{ url_for('admin_payment_reminder') }}";
+    </script>
     {% endif %}
 </body>
 
