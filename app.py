@@ -17,7 +17,7 @@ from datetime import datetime, timedelta, date
 
 app = Flask(__name__)
 app.secret_key = "capstone"
-
+ 
 # Database for localhost
 
 app.config["MYSQL_HOST"] = "localhost"
