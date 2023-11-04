@@ -137,7 +137,7 @@ ul {
     background: rgba(0, 0, 0, .1);
 }
 
-.active{
+.active {
     background: rgba(0, 0, 0, .1);
 }
 
@@ -203,5 +203,24 @@ ul {
     padding-right: 2%;
     align-self: center;
     margin-left: auto;
-    color:#fff
+    color: #fff
 }
+/* Full screen sidenav when in phone */
+/* @media screen and (max-width: 768px) {
+    #sidenav {
+        width: 100%;
+
+        max-width: none;
+        left: -100%;
+
+        transition: left .35s;
+    }
+
+    #sidenav:target {
+        left: 0;
+    }
+
+    #sidenav:target+.sidenav-overlay {
+        left: 0;
+    }
+} */

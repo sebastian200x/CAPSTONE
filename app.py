@@ -347,22 +347,8 @@ def update_info(id):
     total = request.form.get("total")
     update = mysql.connection.cursor()
     try:
-        if (
-            given_name
-            and last_name
-            and gender
-            and id_no
-            and blk_no
-            and lot_no
-            and homelot_area
-            and open_space
-            and sharein_loan
-            and principal_interest
-            and MRI
-            and total
-        ):
-            update.execute(
-                """
+        update.execute(
+            """
                 UPDATE tbl_userinfo
                 SET given_name = %s,
                     middle_name = %s,
@@ -370,46 +356,44 @@ def update_info(id):
                     gender = %s
                 WHERE user_id = %s
                 """,
-                (
-                    given_name,
-                    middle_name,
-                    last_name,
-                    gender,
-                    id,
-                ),
-            )
-            update.execute(
-                """
-                UPDATE tbl_property
-                SET id_no = %s,
-                    blk_no = %s,
-                    lot_no = %s,
-                    homelot_area = %s,
-                    open_space = %s,
-                    sharein_loan = %s,
-                    principal_interest = %s,
-                    MRI = %s,
-                    total = %s
-                WHERE user_id = %s
-                """,
-                (
-                    id_no,
-                    blk_no,
-                    lot_no,
-                    homelot_area,
-                    open_space,
-                    sharein_loan,
-                    principal_interest,
-                    MRI,
-                    total,
-                    id,
-                ),
-            )
-            mysql.connection.commit()
-            update.close()
-            flash("Account updated successfully!", "success")
-        else:
-            flash("Please fill all required fields.", "error")
+            (
+                given_name,
+                middle_name,
+                last_name,
+                gender,
+                id,
+            ),
+        )
+        update.execute(
+            """
+            UPDATE tbl_property
+            SET id_no = %s,
+                blk_no = %s,
+                lot_no = %s,
+                homelot_area = %s,
+                open_space = %s,
+                sharein_loan = %s,
+                principal_interest = %s,
+                MRI = %s,
+                total = %s
+            WHERE user_id = %s
+            """,
+            (
+                id_no,
+                blk_no,
+                lot_no,
+                homelot_area,
+                open_space,
+                sharein_loan,
+                principal_interest,
+                MRI,
+                total,
+                id,
+            ),
+        )
+        mysql.connection.commit()
+        update.close()
+        flash("Account updated successfully!", "success")
     except Exception as e:
         flash(f"Error updating account: {str(e)}", "error")
     return redirect(url_for("admin_members_info"))
@@ -466,17 +450,21 @@ def admin_payment_reminder():
 
 @app.route("/admin/payment_remind/<int:id>", methods=["POST", "GET"])
 def admin_payment_remind(id):
-    remind = mysql.connection.cursor()
-    remind.execute(
+    reminder = mysql.connection.cursor()
+    reminder.execute(
         """
     SELECT tbl_property.total, tbl_userinfo.*
     FROM tbl_property
-    LEFT JOIN tbl_userinfo ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
+    JOIN tbl_userinfo ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
     LIMIT 1;
         """,
-        (id,id,),
+        (
+            id,
+            id,
+        ),
     )
-    return adminredirect("admin/payment_remind.html", remind=remind)
+    reminder_data = reminder.fetchone()
+    return adminredirect("admin/payment_remind.html", reminder=reminder_data)
 
 
 # SELECT tbl_transaction.*
@@ -487,12 +475,63 @@ def admin_payment_remind(id):
 
 @app.route("/admin/payment_remind/remind/<int:id>", methods=["POST", "GET"])
 def admin_payment_remind_remind(id):
-    return adminredirect("admin/payment_reminder.html")
+    due = request.form.get("due")
+    date_conv = datetime.strptime(due, "%Y-%m-%d")
+    due_conv = date_conv.strftime("%Y-%m-%d")
+    amount = request.form.get("amount")
+    reminding = mysql.connection.cursor()
+    reminding.execute(
+        """
+    INSERT INTO `tbl_transaction`(
+    `user_id`,
+    `transc_type`,
+    `amount`,
+    `due_date`
+    )
+    VALUES(
+        %s,
+        "reminder",
+        %s,
+        %s
+    );
+        """,
+        (
+            id,
+            amount,
+            due_conv,
+        ),
+    )
+    mysql.connection.commit()  # Commit the changes to the database
+    reminding.close()  # Close the cursor
+    return redirect(url_for("admin_payment_reminder"))
 
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
 def member_payment_reminder():
-    return memberredirect("member/payment_reminder.html")
+    remind = mysql.connection.cursor()
+    user_id = session['user_id']
+    remind.execute(
+        """
+        
+        SELECT
+            *
+        FROM
+            `tbl_transaction`
+        WHERE
+            transc_type = "reminder" AND user_id = %s
+        ;
+        
+        """,
+        (user_id,)
+    )
+    remind = remind.fetchone()
+
+    return memberredirect("member/payment_reminder.html", remind=remind)
+
+
+@app.route("/member/payment_history", methods=["POST", "GET"])
+def member_payment_history():
+    return memberredirect("member/payment_history.html")
 
 
 @app.route("/logout")

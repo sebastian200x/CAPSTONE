@@ -7,33 +7,31 @@
     <title>Payment Reminder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/payment_remind.css') }}">
     {% include 'navbar.html' %}
-
 </head>
 
 <body>
-    {% if remind %}
-    {% for reminds in remind %}
-    <form action="/admin/payment_remind/remind/{{reminds[0]}}" method="POST" class="container">
-            <h1>Payment Reminder</h1>
-            <h3 class="name">Name: {{reminds[5]}} {{reminds[3]}}, {{reminds[4]}}</h3>
-            
-            <label for="deadline">Deadline:</label>
-            <input type="date" id="deadline" name="deadline" placeholder="Date of deadline">
-
-            <label for="amount">Amount:</label>
-            <span class="currency-code">₱ <input type="number" id="amount" name="amount" /></span>
-
-            <input type="submit" class="buton remind" value="Remind">
+    {% if reminder %}
+    <form action="/admin/payment_remind/remind/{{ reminder[2] }}" method="POST" class="container">
+        <h1>Payment Reminder</h1>
+        <h3 class="name">Name: {{ reminder[5] }} {{ reminder[3] }}, {{ reminder[4] }}</h3>
+        <label for="due">Deadline:</label>
+        <input type="date" id="due" name="due" placeholder="Due date">
+        <label for="amount">Amount:</label>
+        <span class="currency-code">₱ <input type="number" id="amount" name="amount" placeholder="Amount"
+                value="{{ reminder[0] }}" /></span>
+        <input type="submit" class="buton remind" value="Remind">
     </form>
-    {% endfor %}
+    {% else %}
+    <form action="/admin/payment_reminder" method="POST" class="container">
+        <h1>No User ID Found. Please Go Back</h1>
+        <input type="submit" class="buton back" value="Back">
+    </form>
     {% endif %}
-
-
 </body>
 
 </html>
 
-<script>
+<!-- <script>
     // Get the current date
     var currentDate = new Date();
 
@@ -45,4 +43,4 @@
 
     // Set the default value of the input field to the new date
     document.getElementById("deadline").value = formattedDate;
-</script>
+</script> -->

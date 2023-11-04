@@ -15,7 +15,7 @@ h3 {
     text-align: left;
 }
 
-label{
+label {
     padding: 5px 0;
 }
 
@@ -60,6 +60,6 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-.amount{
+.amount {
     margin: 20px;
 }

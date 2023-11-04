@@ -29,6 +29,10 @@
                         <a class="button remind" href="/admin/payment_remind/{{reminds[1]}}">Remind</a>
                     </td>
                 </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Please complete members information</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>

@@ -21,21 +21,26 @@
       {% if session['is_admin'] == 'yes' %}
       <li class="divider"></li>
       <li class="title">Administration</li>
-      <li class="item {% if request.path == '/admin/members_reg' %}active{% endif %}"><a href="/admin/members_reg"><i class="fa-sharp fa-solid fa-pen-to-square"></i> User
+      <li class="item {% if request.path == '/admin/members_reg' %}active{% endif %}"><a href="/admin/members_reg"><i
+            class="fa-sharp fa-solid fa-pen-to-square"></i> User
           Registration</a></li>
-      <li class="item {% if request.path == '/admin/members_info' %}active{% endif %}"><a href="/admin/members_info"><i class="fa-solid fa-address-book"></i> Members Info</a></li>
+      <li class="item {% if request.path == '/admin/members_info' %}active{% endif %}"><a href="/admin/members_info"><i
+            class="fa-solid fa-address-book"></i> Members Info</a></li>
       <li class="title">Payment Management</li>
-      <li class="item {% if request.path == '/admin/payment_history' %}active{% endif %}"><a href="/admin/payment_history"><i class="fa-solid fa-cash-register"></i> Members Payment</a></li>
-      <li class="item {% if request.path == '/admin/payment_reminder' %}active{% endif %}"><a href="/admin/payment_reminder"><i class="fa-solid fa-note-sticky"></i> Payment Reminder</a></li>
+      <li class="item {% if request.path == '/admin/payment_history' %}active{% endif %}"><a
+          href="/admin/payment_history"><i class="fa-solid fa-cash-register"></i> Members Payment</a></li>
+      <li class="item {% if request.path == '/admin/payment_reminder' %}active{% endif %}"><a
+          href="/admin/payment_reminder"><i class="fa-solid fa-note-sticky"></i> Payment Reminder</a></li>
       <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
       {% endif %}
 
       {% if session['is_admin'] == 'no' %}
       <li class="divider"></li>
       <li class="title">Payment Management</li>
-      <li class="item"><a href="/user/payment_reminder"><i class="fa-solid fa-bell"></i> Payment Reminder</a></li>
+      <li class="item"><a href="/member/payment_reminder"><i class="fa-solid fa-bell"></i> Payment Reminder</a></li>
       <li class="item"><a href="#"><i class="fa-solid fa-money-bill-wave"></i> Members Payment</a></li>
-      <li class="item"><a href="#"><i class="fa-solid fa-money-check-dollar"></i> Payment History</a></li>
+      <li class="item"><a href="/member/payment_history"><i class="fa-solid fa-money-check-dollar"></i> Payment
+          History</a></li>
       <li class="item"><a href="#"><i class="fa-solid fa-face-smile"></i> Payment Verification</a></li>
       <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
       {% endif %}
