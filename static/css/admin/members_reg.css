@@ -7,9 +7,11 @@ main {
   padding: 20px;
   margin: 0 70px 0 70px;
 }
-body{
+
+body {
   margin: 100px 0 0 0;
 }
+
 h1 {
   text-align: center;
   margin: 5px;
@@ -62,7 +64,8 @@ input:focus {
   line-height: 1.8;
   font-size: 15px;
 }
-.register:hover{
+
+.register:hover {
   box-shadow: 2px 2px 5px black;
 
 }
