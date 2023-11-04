@@ -30,9 +30,9 @@
 }
 
 .disabled {
+    color: #8e8e8e;
     cursor: not-allowed;
     pointer-events: none;
-    color: #575757
 }
 
 #sidenav {
@@ -140,6 +140,7 @@ ul {
 .active {
     background: rgba(0, 0, 0, .1);
 }
+
 
 /* .footer {
     position: absolute;

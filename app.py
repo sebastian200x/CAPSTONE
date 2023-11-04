@@ -531,9 +531,26 @@ def member_payment_reminder():
     return memberredirect("member/payment_reminder.html", remind=remind)
 
 
+@app.route("/member/payment", methods=["POST", "GET"])
+def member_payment():
+    return memberredirect("/member/payment.html")
+
+
 @app.route("/member/payment_history", methods=["POST", "GET"])
 def member_payment_history():
     return memberredirect("member/payment_history.html")
+
+
+
+
+
+
+
+
+@app.route("/member/payment_verification")
+def payment_verification():
+    return memberredirect("payment_verification.html")
+
 
 
 @app.route("/logout")
