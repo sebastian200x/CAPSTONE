@@ -25,7 +25,7 @@
     margin: 0 0px 0px 20px;
     row-gap: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid black; 
   }
 
   .personal-information label input,

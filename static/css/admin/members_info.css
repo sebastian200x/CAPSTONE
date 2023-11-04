@@ -25,7 +25,7 @@ h2 {
     padding: 0;
 }
 
-.table td,
+.table td, 
 .table th {
     border: 1px solid black;
     padding: 1%;

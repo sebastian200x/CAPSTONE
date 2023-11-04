@@ -59,7 +59,7 @@ i {
 }
 
 @media screen and (max-width:520px) {
-    .yellow-bg {
+    .yellow-bg { 
         width: 80%;
         height: auto;
         flex-direction: column;

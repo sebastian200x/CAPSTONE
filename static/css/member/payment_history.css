@@ -31,7 +31,7 @@ table thead{
     background-color: rgb(194, 193, 193);
     width: 40%;
     margin: 0 auto;
-    padding: 2em;
+    padding: 2em; 
     /* center div */
     position: absolute;
     left: 50%;
