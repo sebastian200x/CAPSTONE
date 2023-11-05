@@ -39,12 +39,12 @@
       <li class="title">Payment Management</li>
       <li class="item {% if request.path == '/member/payment_reminder' %}active{% endif %}"><a
           href="/member/payment_reminder"><i class="fa-solid fa-bell"></i> Payment Reminder</a></li>
-      <li class="item {% if request.path == '/member/payment' %}active{% endif %}"><a href="/member/payment"><i
+      <li class="item restrict {% if request.path == '/member/payment' %}active{% endif %}"><a href="/member/payment"><i
             class="fa-solid fa-money-bill-wave"></i> Members Payment</a></li>
       <li class="item {% if request.path == '/member/payment_history' %}active{% endif %}"><a
           href="/member/payment_history"><i class="fa-solid fa-money-check-dollar"></i> Payment
           History</a></li>
-      <li class="item restrict {% if request.path == '/member/payment_verification' %}active{% endif %}"><a
+      <li class="item restrict{% if request.path == '/member/payment_verification' %}active{% endif %}"><a
           href="/member/payment_verification"><i class="fa-solid fa-face-smile"></i>
           Payment Verification</a></li>
       <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>

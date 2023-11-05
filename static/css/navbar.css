@@ -138,10 +138,11 @@ ul {
     background: rgba(0, 0, 0, .1);
 }
 
-.restrict:hover a {
+.restrict:hover {
     cursor: not-allowed;
 }
-.restrict a{
+
+.restrict a {
     pointer-events: none;
 
 }

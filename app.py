@@ -113,71 +113,77 @@ def login():
         password = request.form["password"]
         sql = mysql.connection.cursor()
         sql.execute(
-            "SELECT * FROM tbl_useracc WHERE username=%s AND password=%s",
+            "SELECT * FROM tbl_useracc WHERE username=%s AND password=%s LIMIT 1",
             (username, password),
         )
+        result = sql.fetchone()
+        if result[5] == "no":
+            if not len(result) == 0:
+                sql.execute(
+                    "SELECT * FROM tbl_useracc, tbl_userinfo WHERE tbl_useracc.username = %s AND tbl_useracc.password = %s AND tbl_useracc.user_id = tbl_userinfo.user_id",
+                    (username, password),
+                )
+                info = sql.fetchone()
+                if info:
+                    is_admin = info[4]
+                    fullname = info[8] + " " + info[10]
+                    user_id = info[0]
+                    if is_admin == "yes":
+                        session.clear()
+                        session["is_admin"] = is_admin
+                        session["fullname"] = fullname
+                        session["user_id"] = user_id
+                        session["user_type"] = "ADMIN"
+                        return redirect(url_for("admin_members_reg"))
+                        # return render_template("home.html")
 
-        result = sql.fetchall()
-        if not len(result) == 0:
-            sql.execute(
-                "SELECT * FROM tbl_useracc, tbl_userinfo WHERE tbl_useracc.username = %s AND tbl_useracc.password = %s AND tbl_useracc.user_id = tbl_userinfo.user_id",
-                (username, password),
-            )
-            info = sql.fetchone()
-            if info:
-                is_admin = info[4]
-                fullname = info[8] + " " + info[10]
-                user_id = info[0]
-                if is_admin == "yes":
-                    session.clear()
-                    session["is_admin"] = is_admin
-                    session["fullname"] = fullname
-                    session["user_id"] = user_id
-                    session["user_type"] = "ADMIN"
-                    return redirect(url_for("admin_members_reg"))
-                    # return render_template("home.html")
+                    elif is_admin == "no":
+                        session.clear()
+                        session["is_admin"] = is_admin
+                        session["fullname"] = fullname
+                        session["user_id"] = user_id
+                        session["user_type"] = "USER"
+                        return redirect(url_for("member_payment_reminder"))
+            else:
+                # LOGIN ATTEMPT
+                login_attempts = session.get("login_attempts", 3)
+                session["login_attempts"] = max(0, login_attempts - 1)
+                login_attempts = session["login_attempts"]
 
-                elif is_admin == "no":
-                    session.clear()
-                    session["is_admin"] = is_admin
-                    session["fullname"] = fullname
-                    session["user_id"] = user_id
-                    session["user_type"] = "USER"
-                    return redirect(url_for("member_payment_reminder"))
-        else:
-            # LOGIN ATTEMPT
-            login_attempts = session.get("login_attempts", 3)
-            session["login_attempts"] = max(0, login_attempts - 1)
-            login_attempts = session["login_attempts"]
+                # Check if the user has exceeded the maximum login attempts
+                if login_attempts == 0:
+                    current_time = datetime.now()
+                    new_time = current_time + timedelta(seconds=30)
+                    if "last_attempt" not in session:
+                        session["last_attempt"] = new_time.strftime("%H:%M:%S")
 
-            # Check if the user has exceeded the maximum login attempts
-            if login_attempts == 0:
-                current_time = datetime.now()
-                new_time = current_time + timedelta(seconds=30)
-                if "last_attempt" not in session:
-                    session["last_attempt"] = new_time.strftime("%H:%M:%S")
+                    last_attempt_time = datetime.strptime(
+                        session["last_attempt"], "%H:%M:%S"
+                    ).time()
+                    current_time = current_time.time()
 
-                last_attempt_time = datetime.strptime(
-                    session["last_attempt"], "%H:%M:%S"
-                ).time()
-                current_time = current_time.time()
+                    if last_attempt_time >= current_time:
+                        time_difference = datetime.combine(
+                            datetime.min, last_attempt_time
+                        ) - datetime.combine(datetime.min, current_time)
+                        time_left = str(time_difference)
+                        session[
+                            "reminder"
+                        ] = f"Maximum login attempts exceeded. Please try again after {time_left} seconds."
+                    else:
+                        session.clear()
+                        session[
+                            "reminder"
+                        ] = f"Wrong Username or Password, 3 tries left"
 
-                if last_attempt_time >= current_time:
-                    time_difference = datetime.combine(
-                        datetime.min, last_attempt_time
-                    ) - datetime.combine(datetime.min, current_time)
-                    time_left = str(time_difference)
+                elif login_attempts == 2 or login_attempts == 1:
                     session[
                         "reminder"
-                    ] = f"Maximum login attempts exceeded. Please try again after {time_left} seconds."
-                else:
-                    session.clear()
-                    session["reminder"] = f"Wrong Username or Password, 3 tries left"
-
-            elif login_attempts == 2 or login_attempts == 1:
-                session[
-                    "reminder"
-                ] = f"Wrong Username or Password, {login_attempts} {'tries' if login_attempts == 2 else 'try'} left"
+                    ] = f"Wrong Username or Password, {login_attempts} {'tries' if login_attempts == 2 else 'try'} left"
+        else:
+            session[
+                "reminder"
+            ] = "The user account has been deleted. If you think this is a mistake, please contact the ADMINISTRATOR"
 
     return userchecker("login.html")
 
@@ -351,9 +357,10 @@ def delete_info(id):
         flash("Account deleted successfully!", "success")
     except Exception as e:
         flash(f"Error deleting account: {str(e)}", "error")
-        
+
     return redirect(url_for("admin_members_info"))
     # return redirect(url_for("admin_members_info"))
+
 
 @app.route("/admin/update_info/<int:id>", methods=["POST", "GET"])
 def update_info(id):
@@ -562,8 +569,9 @@ def member_payment_reminder():
     return memberredirect("member/payment_reminder.html", remind=remind)
 
 
-@app.route("/member/payment", methods=["POST", "GET"])
-def member_payment():
+@app.route("/member/payment/<int:payment_info>", methods=["POST", "GET"])
+def member_payment(payment_info):
+    
     return memberredirect("/member/payment.html")
 
 
