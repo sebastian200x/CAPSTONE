@@ -12,7 +12,7 @@
 <body>
     {% if remind %}
 
-    <div class="yellow-bg">
+    <div class="yellow bg">
         <div class="warning-sign">
             <img src="{{ url_for('static', filename='images/remind-exclamation.svg') }}" alt="Image">
         </div>
@@ -21,9 +21,24 @@
             <h5>Approaching Due Date!</h5>
             <p>You have existing balance to be paid of: {{remind[4]}} </p>
             <button type="button">Pay<i class="fa-solid fa-chevron-right"></i></button>
-            
+
         </div>
-    </div> 
+    </div>
+
+    <!-- <div class="red bg">
+        <div class="warning-sign">
+            <img src="{{ url_for('static', filename='images/remind-exclamation.svg') }}" class="invert" alt="Image">
+        </div>
+        <div class="warning-text">
+            <h1>REMINDER!</h1>
+            <h5>Approaching Due Date!</h5>
+            <strong>Less than 1 Week Left</strong>
+            <p>You have existing balance to be paid of: {{remind[4]}} </p>
+            <button type="button">Pay<i class="fa-solid fa-chevron-right"></i></button>
+
+        </div>
+    </div> -->
+
     {% endif %}
 </body>
 

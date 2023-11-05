@@ -2,8 +2,7 @@
     box-sizing: border-box;
 }
 
-.yellow-bg {
-    background-color: #FFDE59;
+.bg {
     width: 50%;
     height: 350px;
     margin: 0 auto;
@@ -24,8 +23,21 @@
     /* Add transform property */
 }
 
+.yellow {
+    background-color: #FFDE59;
+}
+
+.red {
+    background-color: #d0342c;
+    color: white;
+}
+
 img {
     width: 100%;
+}
+
+.invert {
+    filter: invert(100%);
 }
 
 .warning-text {
@@ -40,7 +52,6 @@ h1 {
 
 h5 {
     letter-spacing: 3px;
-    color: rgb(61, 61, 61);
     font-size: 15px;
     margin-bottom: 20px;
 }

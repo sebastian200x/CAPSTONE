@@ -560,10 +560,10 @@ def member_payment_reminder():
         WHERE
             transc_type = "reminder" AND user_id = %s
         ;
-        
+
         """,
         (user_id,),
-    )
+    )   
     remind = remind.fetchone()
 
     return memberredirect("member/payment_reminder.html", remind=remind)
@@ -577,6 +577,7 @@ def member_payment(payment_info):
 
 @app.route("/member/payment_history", methods=["POST", "GET"])
 def member_payment_history():
+    
     return memberredirect("member/payment_history.html")
 
 
