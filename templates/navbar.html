@@ -8,7 +8,7 @@
 <nav class="navbar">
   {% if request.path == '/login' or request.path == '/'%}
   <!--  or request.path == '/member/payment_verification' -->
-  <a href="#" class="btn disabled">&#8801;</a>
+  <a class="btn disabled">&#8801;</a>
   {% else %}
   <a href="#sidenav" class="btn open">&#8801;</a>
   <div class="sidenav" id="sidenav">
@@ -47,7 +47,8 @@
       <li class="item restrict {% if request.path == '/member/payment_verification' %}active{% endif %}"><a
           href="/member/payment_verification"><i class="fa-solid fa-face-smile"></i>
           Payment Verification</a></li>
-      <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Logout </a></li>
+      <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+
       {% endif %}
     </ul>
   </div>

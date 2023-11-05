@@ -44,10 +44,12 @@
         <td>{{ incs[13] }}</td>
         <td>{{ incs[14] }}</td>
         <td>
-            <a class="edit button" href="/admin/edit_info/{{incs[1]}}">
-              <i class="fa-solid fa-pen-to-square"></i> EDIT</a>
-            <a class="delete button" href="/admin/delete_info/{{incs[1]}}" onclick="return confirm('Are you sure you want to delete this account?')">
-              <i class='fa-solid fa-trash'></i> DELETE</a>
+          <form method="POST" action="/admin/edit_info/{{incs[1]}}">
+            <input type="submit" class="edit button" value="&#xf044; EDIT">
+            <input type="submit" class="delete button" value="&#xf2ed; DELETE"
+              formaction="/admin/delete_info/{{incs[1]}}"
+              onclick="return confirm('Are you sure you want to delete this account?')">
+          </form>
         </td>
       </tr>
       {% endfor %}
@@ -73,14 +75,14 @@
         <td>{{ completed[13] }}</td>
         <td>{{ completed[14] }}</td>
         <td>
-          <a class="edit button" href="/admin/edit_info/{{completed[1]}}">
-            <i class="fa-solid fa-pen-to-square"></i> EDIT</a>
-
-          <a class="delete button" href="/admin/delete_info/{{completed[1]}}"
-            onclick="return confirm('Are you sure you want to delete this account?')">
-            <i class='fa-solid fa-trash'></i> DELETE</a>
+          <form method="POST" action="/admin/edit_info/{{completed[1]}}">
+            <input type="submit" class="edit button" value="&#xf044; EDIT">
+            <input type="submit" class="delete button" value="&#xf2ed; DELETE"
+              formaction="/admin/delete_info/{{completed[1]}}"
+              onclick="return confirm('Are you sure you want to delete this account?')">
+          </form>
         </td>
-        {% endfor %} 
+        {% endfor %}
         {% else %}
         <td colspan="4">No Result</td>
         {% endif %}

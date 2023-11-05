@@ -52,10 +52,9 @@ button {
     border-radius: 5px;
 }
 
-i {
+.fa-chevron-right {
     float: right;
     margin-right: 10px;
-
 }
 
 @media screen and (max-width:520px) {

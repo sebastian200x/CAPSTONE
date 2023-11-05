@@ -17,7 +17,7 @@ from datetime import datetime, timedelta, date
 
 app = Flask(__name__)
 app.secret_key = "capstone"
- 
+
 # Database for localhost
 
 app.config["MYSQL_HOST"] = "localhost"
@@ -297,7 +297,9 @@ def admin_members_info():
     JOIN tbl_userinfo 
     JOIN tbl_useracc 
     ON tbl_property.user_id = tbl_userinfo.user_id AND tbl_property.user_id = tbl_useracc.user_id
-    WHERE blk_no IS NOT NULL
+    WHERE is_admin = "no" 
+        AND is_deleted = "no"
+        AND blk_no IS NOT NULL
         AND lot_no IS NOT NULL
         AND homelot_area IS NOT NULL
         AND open_space IS NOT NULL
@@ -312,7 +314,7 @@ def admin_members_info():
     return adminredirect("/admin/members_info.html", inc=inc, complete=complete)
 
 
-@app.route("/admin/edit_info/<int:id>")
+@app.route("/admin/edit_info/<int:id>", methods=["POST", "GET"])
 def admin_edit_info(id):
     info = mysql.connection.cursor()
     info.execute(
@@ -329,6 +331,29 @@ def admin_edit_info(id):
 
     return adminredirect("/admin/edit_info.html", info=info)
 
+
+@app.route("/admin/delete_info/<int:id>", methods=["POST", "GET"])
+def delete_info(id):
+    delete = mysql.connection.cursor()
+    try:
+        delete.execute(
+            """
+            UPDATE
+                `tbl_useracc`
+            SET
+                `is_deleted` = 'yes'
+            WHERE
+                `tbl_useracc`.`user_id` = %s;
+            """,
+            (id,),
+        )
+        mysql.connection.commit()
+        flash("Account deleted successfully!", "success")
+    except Exception as e:
+        flash(f"Error deleting account: {str(e)}", "error")
+        
+    return redirect(url_for("admin_members_info"))
+    # return redirect(url_for("admin_members_info"))
 
 @app.route("/admin/update_info/<int:id>", methods=["POST", "GET"])
 def update_info(id):
@@ -399,30 +424,36 @@ def update_info(id):
     return redirect(url_for("admin_members_info"))
 
 
-@app.route("/admin/delete_info/<int:id>")
-def delete_info(id):
-    info = mysql.connection.cursor()
-    info.execute(
-        """
-    SELECT * 
-    FROM tbl_userinfo 
-    JOIN tbl_property
-    ON tbl_userinfo.user_id = %s AND tbl_property.user_id = %s
-    LIMIT 1""",
-        (id, id),
-    )
-
-    return adminredirect("/admin/edit_info.html")
-
-
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
     history = mysql.connection.cursor()
     history.execute(
-        "SELECT * FROM tbl_transaction WHERE transc_type != 'reminder' ORDER BY date"
+        """
+        SELECT tbl_transaction.*, tbl_userinfo.*
+        FROM tbl_transaction
+        JOIN tbl_userinfo ON tbl_userinfo.user_id = tbl_transaction.user_id
+        WHERE tbl_transaction.transc_type != 'reminder'
+        ORDER BY tbl_transaction.date;
+        """
     )
     history = history.fetchall()
     return adminredirect("/admin/payment_history.html", history=history)
+
+
+@app.route("/admin/view_history/<int:id>", methods=["POST", "GET"])
+def admin_view_history(id):
+    view = mysql.connection.cursor()
+    view.execute(
+        """
+        SELECT *
+        FROM tbl_transaction
+        JOIN tbl_userinfo ON tbl_transaction.user_id = tbl_userinfo.user_id
+        WHERE tbl_transaction.transac_id = %s;
+        """,
+        (id,),
+    )
+    view = view.fetchone()
+    return adminredirect("/admin/view_history.html", view=view)
 
 
 @app.route("/admin/payment_reminder", methods=["POST", "GET"])
@@ -541,16 +572,9 @@ def member_payment_history():
     return memberredirect("member/payment_history.html")
 
 
-
-
-
-
-
-
 @app.route("/member/payment_verification")
 def payment_verification():
     return memberredirect("/member/payment_verification.html")
-
 
 
 @app.route("/logout")

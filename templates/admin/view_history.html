@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/view_history.css') }}">
+    {% include 'navbar.html' %}
+
+</head>
+
+<body>
+    {% if view %}
+    <form action="/admin/payment_history" method="POST" class="pop-up-edit">
+        <p><b>Name: </b> {{view[11]}}, {{view[9]}} {{view[10]}}</p>
+        <p><b>Transaction Type: {{view[3]}}</b></p>
+        <p><b>Total Amount: {{view[4]}}</b></p>
+        <p><b>Balance Debt: {{view[2]}}</b></p>
+        <p><b>Date of payment: {{view[5]}}</b></p>
+        <!-- <button class="close">Close</button> -->
+        <input type="submit" class="close" value="Close">
+        </div>
+    </form>
+    {% else %}
+    <script>
+        alert("User ID not found")
+        window.location.href = "{{ url_for('admin_payment_reminder') }}";
+    </script>
+    {% endif %}
+</body>
+
+</html>

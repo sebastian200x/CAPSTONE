@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Methods</title>
+    <title>Payment Method</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/member/payment.css') }}">
     {% include 'navbar.html' %}
 
@@ -19,7 +19,7 @@
                     name="payment"></label> <br>
             <label for="G-cash"><i class="fa-brands fa-google"></i>G-Cash<input type="radio" id="G-cash"
                     name="payment"></label> <br>
-            <button type="button">Payment Verification</button>
+            <input class="verify" type="submit" value="Payment Verification">
         </div>
     </div>
 </body>
