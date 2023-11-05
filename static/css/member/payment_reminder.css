@@ -62,8 +62,6 @@ button {
     margin-right: 10px;
 }
 
-
-
 @media screen and (max-width:520px) {
     .yellow-bg {
         width: 80%;
