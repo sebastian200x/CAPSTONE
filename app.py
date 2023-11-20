@@ -118,7 +118,7 @@ def login():
         )
         result = sql.fetchall()
         if len(result) != 0:
-            if result[5] == "no":
+            if result[0][5] == 'no':
                 sql.execute(
                     "SELECT * FROM tbl_useracc, tbl_userinfo WHERE tbl_useracc.username = %s AND tbl_useracc.password = %s AND tbl_useracc.user_id = tbl_userinfo.user_id",
                     (username, password),
