@@ -118,13 +118,13 @@ def login():
         )
         result = sql.fetchall()
         if len(result) != 0:
-            if result[0][5] == 'no':
+            if result[0][5] == "no":
                 sql.execute(
                     "SELECT * FROM tbl_useracc, tbl_userinfo WHERE tbl_useracc.username = %s AND tbl_useracc.password = %s AND tbl_useracc.user_id = tbl_userinfo.user_id",
                     (username, password),
                 )
                 info = sql.fetchone()
-                if info and "reminder" not in session:
+                if "login_attempts" not in session or session["login_attempts"] != 0:
                     is_admin = info[4]
                     fullname = info[8] + " " + info[10]
                     user_id = info[0]
@@ -177,15 +177,13 @@ def login():
                     ] = f"Maximum login attempts exceeded. Please try again after {time_left} seconds."
                 else:
                     session.clear()
-                    session[
-                        "reminder"
-                    ] = f"Wrong Username or Password, 3 tries left"
+                    session["reminder"] = f"Wrong Username or Password, 3 tries left"
 
             elif login_attempts == 2 or login_attempts == 1:
                 session[
                     "reminder"
                 ] = f"Wrong Username or Password, {login_attempts} {'tries' if login_attempts == 2 else 'try'} left"
-        
+
     return userchecker("login.html")
 
 
@@ -572,19 +570,18 @@ def member_payment_reminder():
 
 @app.route("/member/payment/<int:payment_info>", methods=["POST", "GET"])
 def member_payment(payment_info):
-    
     return memberredirect("/member/payment.html")
 
 
 @app.route("/member/payment_history", methods=["POST", "GET"])
 def member_payment_history():
-    
     return memberredirect("member/payment_history.html")
 
 
 @app.route("/member/payment_verification")
 def payment_verification():
     return memberredirect("/member/payment_verification.html")
+
 
 @app.route("/logout")
 def logout():
