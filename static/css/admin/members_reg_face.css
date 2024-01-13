@@ -1,0 +1,12 @@
+.grid{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+/* para sa left side gamit ko flexshit */
+.grid .left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center ;
+} 

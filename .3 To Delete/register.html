@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <!-- wrapper yung main -->
+    <h1>Register Account</h1>
+    <form method="POST" action="register">
+        <main>
+            <div class="personal-information">
+                <h3>Personal Information</h3>
+                <label for="given-name">Given Name
+                    <input type="text" id="given-name" name="gname" required>
+                </label>
+                <label for="middle-name">Middle Name
+                    <input type="text" id="last-name" name="mname" required>
+                </label>
+                <label for="last-name">Last Name
+                    <input type="text" id="middle-name" name="lname" required>
+                </label>
+                <!-- <label for="gender">Gender
+                <select name="gender" id="gender" required>
+                    <option value="" selected>Please select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </label> -->
+            </div>
+            <div class="account-information">
+                <h3>Account Information</h3>
+                <label for="user-name"> Username
+                    <input type="text" id="user-name" name="username" required>
+                </label>
+                <label for="password">Password
+                    <input type="password" id="password" name="password" required>
+                </label>
+                <label class="whole-span" for="email">Email
+                    <input type="email" name="email" id="email" required>
+                </label>
+            </div>
+            <input type="submit" name="register" class="register" value="Register">
+    </form>
+
+    </main>
+</body>
+
+</html>
+{#
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <title>{% block title%}Home{% endblock %}</title>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if is_admin == 'no' %}
+                <a class="navbar-item nav-link " id="home" href="/">Home</a>
+                {% endif %}
+
+                <a class="navbar-item nav-link " id="home" href="/home2">Home2</a>
+
+                <a class="navbar-item nav-link " id="home" href="/login">login</a>
+                <a class="navbar-item nav-link " id="home" href="/signup">signup</a>
+                <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Payment Management
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">payment history</a>
+                        <a class="dropdown-item" href="/memberspayment">Members Payment</a>
+                        <a class="dropdown-item" href="#">Payment Verification</a>
+                </li>
+                <!-- Session Username -->
+                <h3 class="text-white">{{userS}}</h3>
+
+            </ul>
+
+        </div>
+    </nav>
+</head>
+
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category =='error' %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block content%}
+
+    <h1>Home</h1>
+
+
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td scope="col-span 2">Userinfo id</td>
+                <td scope="col">User id</td>
+                <td scope="col">Gender</td>
+                <td scope="col">email</td>
+                <td scope="col">id no</td>
+                <td scope="col">blk no</td>
+                <td scope="col">lot no</td>
+                <td scope="col">homelot area</td>
+                <td scope="col">open space</td>
+                <td scope="col">sharein loan</td>
+                <td scope="col">principal interest</td>
+                <td scope="col">MRI</td>
+                <td scope="col">Total</td>
+                <td scope="col">Manage</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for row in users %}
+                <td>{{row.0}}</td>
+                <td>{{row.1}}</td>
+                <td>{{row.2}}</td>
+                <td>{{row.3}}</td>
+                <td>{{row.4}}</td>
+                <td>{{row.5}}</td>
+                <td>{{row.6}}</td>
+                <td>{{row.7}}</td>
+                <td>{{row.8}}</td>
+                <td>{{row.9}}</td>
+                <td>{{row.10}}</td>
+                <td>{{row.11}}</td>
+
+                <td>{{row.12}}</td>
+                <td>
+                    <a href="/update/{{row.0}}" class="btn btn-warning btn-sm" data-toggle="modal"
+                        data-target="#modaledit{{row.0}}">Edit</a>
+                    <a href="/delete/{{row.0}}" onclick="return confirm('GUSTO MO BA TALGA TANGGALIN? ')"
+                        class="btn btn-danger btn-sm">delete</a></a>
+                </td>
+            </tr>
+            <!-- update member-->
+            <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title text-success">Please Update Student</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url_for('update')}}" method="POST">
+                                <input type="text" name="id" id="id" value="{{row.0}}">
+                                <div class="form-group">
+                                    <label for="gender">Enter gender</label>
+                                    <input value="{{row.2}}" class="form-control" type="text" name="gender" id="gender">
+
+                                    <label for="email">Email</label>
+                                    <input value="{{row.3}}" class="form-control" type="email" name="email" id="email">
+
+                                    <label for="idno">Enter Idno</label>
+                                    <input value="{{row.4}}" class="form-control" type="text" name="idno" id="idno">
+
+                                    <label for="blk">Enter blk no</label>
+                                    <input value="{{row.5}}" class="form-control" type="text" name="blk" id="blkno">
+
+                                    <label for="lot">Enter lot no</label>
+                                    <input value="{{row.6}}" class="form-control" type="text" name="lot" id="lotno">
+
+                                    <label for="lot">Enter homelot area</label>
+                                    <input value="{{row.7}}" class="form-control" type="text" name="homelot" id="lotno">
+
+                                    <label for="openspace">Enter openspace</label>
+                                    <input value="{{row.8}}" class="form-control" type="text" name="openspace"
+                                        id="openspace">
+
+                                    <label for="sharein">Enter share in loan</label>
+                                    <input value="{{row.9}}" class="form-control" type="text" name="share"
+                                        id="shareinloan">
+
+                                    <label for="principal">principal Interest</label>
+                                    <input value="{{row.10}}" class="form-control" type="text" name="principal"
+                                        id="principal">
+
+
+                                    <label for="MRI">Enter MRI</label>
+                                    <input value="{{row.11}}" class="form-control" type="text" name="MRI" id="MRI">
+
+
+                                </div>
+                                <input type="submit" value="submit" class="btn btn-success">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end  edit member-->
+
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="col-sm-2"></div>
+
+    <div class="col-sm-2"></div>
+
+
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html> #}

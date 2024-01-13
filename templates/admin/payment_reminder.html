@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Reminder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/payment_reminder.css') }}">
+    {% include 'navbar.html' %}
+</head>
+
+<body>
+    <div class="table">
+        <h1>Payment Reminder</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reminds in remind %}
+                <tr>
+                    <td>{{reminds[15]}}, {{reminds[13]}} {{reminds[14]}}</td>
+                    <td>{{reminds[10]}}</td>
+                    <td>
+                        <a class="button remind" href="/admin/payment_remind/{{reminds[1]}}">Remind</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">There is no one to remind</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

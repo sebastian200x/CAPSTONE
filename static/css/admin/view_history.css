@@ -1,0 +1,40 @@
+.pop-up-edit{
+    background-color: rgb(194, 193, 193);
+    width: 40%;
+    margin: 0 auto;
+    padding: 2em;
+    /* center div */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid;
+    border-radius: 10px;
+    font-weight: bold;  
+}
+.pop-up-edit p{
+    text-align: left;
+}
+.pop-up-edit p{
+    font-size: 1.5rem;
+}
+.pop-up-edit .close{
+    padding: 5px;
+    width: 10%;
+    background-color: rgb(250, 72, 72);
+    cursor: pointer;
+}
+.pop-up-edit label , input[type=date], output{
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+.pop-up-edit .btn-remind-pop{
+    background-color: yellow;
+    border-radius:5px ;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 10px ;
+    font-weight: bold;
+}

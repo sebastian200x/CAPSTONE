@@ -1,0 +1,198 @@
+.grid {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}
+
+/* left side */
+.grid .left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-side img {
+    width: 150px;
+}
+
+/* paayos nalang fontsize hahaha */
+.left-side h1 {
+    letter-spacing: 2px;
+}
+
+.left-side h5 {
+    color: gray;
+}
+
+/* right-side*/
+.right-side {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-items: center;
+    background-color: #6FB9B9;
+}
+
+h2 {
+    text-align: center;
+}
+
+.right-side h2 {
+    grid-column: span 3;
+    align-self: center;
+}
+
+.right-side img {
+    grid-column: 2;
+
+}
+
+.right-side button {
+    grid-column: span 3;
+    align-self: start;
+}
+
+button {
+    padding: 5px 10px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+
+.login {
+    background-color: #6FB9B9;
+    padding-top: 10%;
+}
+
+.login h1 {
+    text-align: center;
+    padding: 3rem;
+}
+
+fieldset {
+    padding: 2rem 0 0 0;
+    border: none;
+}
+
+fieldset:last-of-type {
+    border-bottom: none;
+}
+
+#set-1 {
+    padding-bottom: 0;
+}
+
+form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+#set-1 label input {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    padding-left: 10px;
+    margin-top: 5px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    line-height: 1.8;
+
+}
+
+#set-1 label input:focus{
+    outline: 1px solid black;
+}
+
+/* set-3 */
+#set-2 input {
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    cursor: pointer;
+    line-height: 1.8;
+}
+
+#set-2 input:hover {
+    box-shadow: 2px 2px 5px black;
+}
+
+
+
+/* Alert */
+.alert {
+    position: static;
+    padding: 10px;
+    line-height: 1.8;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: 400;
+    text-align: center;
+}
+
+.alertCheckbox {
+    display: none;
+}
+
+:checked+.alert {
+    display: none;
+}
+
+.alertText {
+    margin: 0 auto; 
+    font-size: 16px;
+}
+
+.alertClose {
+    float: right;
+    padding-top: 5px;
+    font-size: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+.info {
+    background-color: #EEE;
+    border: 1px solid #DDD;
+    color: #999;
+}
+
+.success {
+    background-color: #EFE;
+    border: 1px solid #DED;
+    color: #9A9;
+}
+
+.notice {
+    background-color: #EFF;
+    border: 1px solid #DEE;
+    color: #9AA;
+}
+
+.warning {
+    background-color: #FDF7DF;
+    border: 1px solid #FEEC6F;
+    color: #C9971C;
+}
+
+.error {
+    background-color: #FEE;
+    border: 1px solid #EDD;
+    color: #A66;
+}

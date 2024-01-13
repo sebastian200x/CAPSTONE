@@ -1,0 +1,35 @@
+.table {
+    margin-top: 100px;
+    text-align: center;
+
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 40px auto;
+}
+
+.table td,
+.table th {
+    border: 2px solid black;
+    padding: 8px;
+}
+
+table thead {
+    font-weight: bold;
+}
+
+.button {
+    display: inline-block;
+    padding: 5px 10px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px #000 solid
+}
+
+.remind {
+    background-color: #ffd60b;
+}

@@ -1,0 +1,106 @@
+  body {
+    padding-top: 10%;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  main {
+    width: 80%;
+    background-color: #6FB9B9;
+    padding: 1em;
+    border-radius: 10px;
+    /* center div */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* alam ko meron na code neto e */
+  .personal-information {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 0px 0px 20px;
+    row-gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black; 
+  }
+
+  .personal-information label input,
+  select,
+  .property-information label input {
+    display: block;
+  }
+
+  input[type="text"],
+  select {
+    padding: 5px 10px;
+    min-width: 70%;
+    border-radius: 5px;
+    width: 90%;
+  }
+
+
+  .property-information {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 0 20px;
+    row-gap: 10px;
+  }
+
+  .property-information label {
+    grid-column: span 2;
+  }
+
+  main h3,
+  .buttons {
+    text-align: center;
+    margin-top: 20px;
+
+  }
+
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px #000 solid;
+    cursor: pointer;
+  }
+
+
+  .close,
+  .back {
+    background-color: rgb(88, 88, 88);
+  }
+
+
+  .update {
+    background-color: rgb(0, 192, 0);
+  }
+
+  input[type="submit"] {
+    font-family: FontAwesome;
+  }
+
+
+  /* responsive */
+  @media screen and (max-width:500px) {
+
+    .personal-information,
+    .property-information {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .buttons button {
+      width: 100px;
+    }
+  }

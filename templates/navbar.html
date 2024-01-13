@@ -1,0 +1,84 @@
+<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
+
+<nav class="navbar">
+  {% if request.path == '/login' or request.path == '/'%}
+  <!--  or request.path == '/member/payment_verification' -->
+  <a class="btn disabled">&#8801;</a>
+  {% else %}
+  <a href="#sidenav" class="btn open">&#8801;</a>
+  <div class="sidenav" id="sidenav">
+    <ul>
+      <li class="center user">
+        <!-- <img src="https://picsum.photos/300/300" alt="User" /> -->
+        <p>{{session['fullname']}}</p>
+      </li>
+
+      {% if session['is_admin'] == 'yes' %}
+      <li class="divider"></li>
+      <li class="title">Administration</li>
+      <li class="item {% if request.path == '/admin/members_reg' %}active{% endif %}"><a href="/admin/members_reg"><i
+            class="fa-sharp fa-solid fa-pen-to-square"></i> User
+          Registration</a></li>
+      <li class="item {% if request.path == '/admin/members_info' %}active{% endif %}"><a href="/admin/members_info"><i
+            class="fa-solid fa-address-book"></i> Members Info</a></li>
+      <li class="title">Payment Management</li>
+      <li class="item {% if request.path == '/admin/payment_history' %}active{% endif %}"><a
+          href="/admin/payment_history"><i class="fa-solid fa-cash-register"></i> Members Payment</a></li>
+      <li class="item {% if request.path == '/admin/payment_reminder' %}active{% endif %}"><a
+          href="/admin/payment_reminder"><i class="fa-solid fa-note-sticky"></i> Payment Reminder</a></li>
+      <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+      {% endif %}
+
+      {% if session['is_admin'] == 'no' %}
+      <li class="divider"></li>
+      <li class="title">Payment Management</li>
+      <li class="item {% if request.path == '/member/payment_reminder' %}active{% endif %}"><a
+          href="/member/payment_reminder"><i class="fa-solid fa-bell"></i> Payment Reminder</a></li>
+      <li class="item restrict {% if request.path == '/member/payment' %}active{% endif %}"><a href="/member/payment"><i
+            class="fa-solid fa-money-bill-wave"></i> Members Payment</a></li>
+      <li class="item {% if request.path == '/member/payment_history' %}active{% endif %}"><a
+          href="/member/payment_history"><i class="fa-solid fa-money-check-dollar"></i> Payment
+          History</a></li>
+      <li class="item restrict{% if request.path == '/member/payment_verification' %}active{% endif %}"><a
+          href="/member/payment_verification"><i class="fa-solid fa-face-smile"></i>
+          Payment Verification</a></li>
+      <li class="item"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+
+      {% endif %}
+    </ul>
+  </div>
+  <a href="#!" class="close sidenav-overlay"></a>
+  {% endif %}
+
+  <a class="navbar-brand" href="/">
+    <img src="{{ url_for('static', filename='images/logo-s.png') }}" alt="logo-s" class="navbar-img" />
+    HOA Finance
+  </a>
+  <div class="username">
+    <h3>
+      {% if session['is_admin'] == "yes" %}
+      <i class="fa-solid fa-user-tie"></i>
+      {% elif session['is_admin'] == "no" %}
+      <i class="fa-solid fa-user"></i>
+      {% endif %}
+      {{session['user_type']}}
+    </h3>
+    
+  </div>
+</nav>
+
+<!-- <script scr="{{ url_for('static', filename='js/navbar.js') }}"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+
+<!-- Prevent the user from being able to navigate back to a specific page using the browser's back button -->
+<script>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>

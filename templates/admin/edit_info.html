@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/edit_info.css') }}">
+    {% include 'navbar.html' %}
+    <title>Edit User Info</title>
+</head>
+
+<body>
+    {% if info %}
+    <form method="POST" action="/admin/update_info/{{info[0]}}">
+        <main>
+            <h1>EDIT USER INFO</h1>
+            <h3>Personal Information</h3>
+            <div class="personal-information">
+                <label for="given_name">Given Name
+                    <input type="text" id="given_name" name="given_name" required
+                        value="{% if info[2] is none %}{% else %}{{ info[2] }}{% endif %}" autocapitalize>
+                </label>
+                <label for="last_name">Last Name
+                    <input type="text" id="last_name" name="last_name" required
+                        value="{% if info[3] is none %}{% else %}{{ info[3] }}{% endif %}">
+                </label>
+                <label for="middle_name">Middle Name
+                    <input type="text" id="middle_name" name="middle_name" required
+                        value="{% if info[4] is none %}{% else %}{{ info[4] }}{% endif %}">
+                </label>
+                <label for="gender">Gender
+                    <select class="select" name="gender" id="gender" required>
+                        {% if info[5] %}
+                        {% if info[5] == "Male" %}
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        {% elif info[5] == "Female" %}
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                        {% else %}
+                        {% if info[5] == "" %}
+                        <option value="" selected>Please Select One</option>
+                        {% else %}
+                        <option value="">Please Select One</option>
+                        {% endif %}
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        {% endif %}
+                        {% else %}
+                        <option value="" selected>Please Select One</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        {% endif %}
+                    </select>
+                </label>
+            </div>
+            <h3>Property Information</h3>
+            <div class="property-information">
+                <label for="id_no">ID No.
+                    <input type="text" id="id_no" name="id_no" required
+                        value="{% if info[8] is none %}{% else %}{{ info[8] }}{% endif %}">
+                </label>
+                <label for="blk_no">Block No.
+                    <input type="text" id="blk_no" name="blk_no" required
+                        value="{% if info[9] is none %}{% else %}{{ info[9] }}{% endif %}">
+                </label>
+                <label for="lot_no">Lot No.
+                    <input type="text" id="lot_no" name="lot_no" required
+                        value="{% if info[10] is none %}{% else %}{{ info[10] }}{% endif %}">
+                </label>
+                <label for="homelot_area">Homelot Area
+                    <input type="text" id="homelot_area" name="homelot_area" required
+                        value="{% if info[11] is none %}{% else %}{{ info[11] }}{% endif %}">
+                </label>
+                <label for="open_space">Open Space
+                    <input type="text" id="open_space" name="open_space" required
+                        value="{% if info[12] is none %}{% else %}{{ info[12] }}{% endif %}">
+                </label>
+                <label for="sharein_loan">Share In Loan
+                    <input type="text" id="sharein_loan" name="sharein_loan" required
+                        value="{% if info[13] is none %}{% else %}{{ info[13] }}{% endif %}">
+                </label>
+                <label for="principal_interest">Principal Interest
+                    <input type="text" id="principal_interest" name="principal_interest" required
+                        value="{% if info[14] is none %}{% else %}{{ info[14] }}{% endif %}">
+                </label>
+                <label for="MRI">MRI
+                    <input type="text" id="MRI" name="MRI" required
+                        value="{% if info[15] is none %}{% else %}{{ info[15] }}{% endif %}">
+                </label>
+                <label for="total">Total
+                    <input type="text" id="total" name="total" required
+                        value="{% if info[16] is none %}{% else %}{{ info[16] }}{% endif %}">
+                </label>
+            </div>
+
+            <div class="buttons">
+                <input class="update button" type="submit" value="&#xf044;  Update"
+                    onclick="return confirm('Are you sure you want to update this info?')">
+
+                <input class="close button" type="submit" value="&#xf00d;  Close" formaction="/admin/members_info">
+            </div>
+        </main> 
+    </form>
+    {% else %}
+    <script>
+        alert("User ID not found")
+        window.location.href = "{{ url_for('admin_members_info') }}";
+    </script>
+    {% endif %}
+</body>
+
+</html>

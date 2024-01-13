@@ -1,0 +1,82 @@
+/* main design here */
+main {
+  /* gumamit nalang ako ng margin-top naka fixed kasi yung navbar try mo tanggalin tong margin pupunta sa taas sa likod
+  nung navbar. diko alam pano nangyayari yon e */
+  background-color: #6FB9B9;
+  height: 100%;
+  padding: 20px;
+  margin: 0 70px 0 70px;
+}
+
+body {
+  margin: 100px 0 0 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 5px;
+}
+
+h3 {
+  text-align: center;
+  grid-column: span 2;
+}
+
+.personal-information,
+.account-information {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 20px 20px;
+  row-gap: 10px;
+}
+
+.personal-information label input,
+select,
+.account-information label input {
+  display: block;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+  padding: 3px 10px;
+  min-width: 70%;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+}
+
+input:focus {
+  outline: 1px solid;
+
+}
+
+.register {
+  display: block;
+  margin: auto;
+  width: auto;
+  padding: 10px 30px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid black;
+  cursor: pointer;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.register:hover {
+  box-shadow: 2px 2px 5px black;
+
+}
+
+@media only screen and (max-width: 768px) {
+  main {
+    margin: 0 20px;
+  }
+
+  .personal-information,
+  .account-information {
+    grid-template-columns: 1fr;
+  }
+}

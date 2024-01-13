@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment History</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/payment_history.css') }}">
+  {% include 'navbar.html' %}
+</head>
+
+<body>
+  <div class="table">
+    <h1>Payment History</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Transaction Type</th>
+          <th>Date Paid</th>
+          <th>Amount</th>
+          <th>Manage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% if history %}
+          {% for histories in history %}
+          <td>{{ histories[11] }}, {{ histories[9] }} {{ histories[10] }}</td>
+          <td>{{ histories[5] }}</td>
+          <td>{{ histories[4] }}</td>
+          <td>
+            <form action="/admin/view_history/{{histories[0]}}" method="POST">
+              <input type="submit" class="btn-view" value="View">
+            </form>
+          </td>
+        </tr>
+        {%endfor%}
+        {% else %}
+        <td colspan="4">No Result</td>
+        {% endif %}
+      </tbody>
+    </table>
+
+</body>
+
+</html>

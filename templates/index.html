@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Owners Finance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    {% include 'navbar.html' %}
+</head>
+
+<body>
+    <div class="index">
+        <img src="{{ url_for('static', filename='images/logo-b.png') }}" alt="logo-l" class="logo-l"
+            style="height: 50%; width: 50%;">
+        <form action="login" method="POST">
+            <a type="submit" href="/login" class="login-btn">Login</a>
+        </form>
+    </div>
+</body> 
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/member/payment_history.css') }}">
+    {% include 'navbar.html' %}
+</head>
+
+<body>
+    <div class="table">
+        <h1>Payment History</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction Type</th>
+                    <th>Date Paid</th>
+                    <th>Amount</th>
+                    <th>Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% if history %}
+                    {% for histories in history %}
+                    <td>{{ histories[4] }}</td>
+                    <td>{{ histories[2] }}</td>
+                    <td>{{ histories[3] }}</td>
+                    <td>
+                        <button class="btn-view">View</button>
+                    </td>
+                    {%endfor%} 
+                    {% else %}
+                    <td colspan="4">No Result</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+
+</body>
+
+</html>

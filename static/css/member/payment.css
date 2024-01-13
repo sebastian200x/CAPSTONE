@@ -1,0 +1,66 @@
+.box {
+    /* itong box pwede  */
+    /*margin-top: 60px; ito base mo nalang sa navbar baka hindi makita e. kasi nakasa fixed posistion navbar.. owww  */
+
+    /*margin: 40px auto; Ito yung pang center jet diko alam kung pati top e.*/
+
+    /* Itong pang center pero parang hindi nga center e hahaha */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    border: 1px solid black;
+    background: #6fb9b9;
+    border-radius: 5px
+}
+
+.wrapper-payment {
+    /* height: 80%; */
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+/* all label design */
+label {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: block;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+label i {
+    margin-right: 20px;
+}
+
+label:focus-within {
+    outline: 2px solid black;
+}
+
+input[type="radio"] {
+    float: right;
+}
+
+
+
+.verify {
+    display: block;
+    margin: 30px auto;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+
+.verify:hover {
+    border: 1px solid black;
+    
+}
+
+h1 {
+    padding: 20px;
+}
+
+p {
+    padding-bottom: 20px;
+}

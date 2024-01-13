@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Reminder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/payment_remind.css') }}">
+    {% include 'navbar.html' %}
+</head>
+
+<body>
+    {% if reminder %}
+    <form action="/admin/payment_remind/remind/{{ reminder[2] }}" method="POST" class="container">
+        <h1>Payment Reminder</h1>
+        <h3 class="name">Name: {{ reminder[5] }} {{ reminder[3] }}, {{ reminder[4] }}</h3>
+        <label for="due">Deadline:</label>
+        <input type="date" id="due" name="due" placeholder="Due date">
+        <label for="amount">Amount:</label>
+        <span class="currency-code">₱ <input type="number" id="amount" name="amount" placeholder="Amount"
+                value="{{ reminder[0] }}" /></span>
+        <input type="submit" class="buton remind" value="Remind">
+    </form>
+    {% else %}
+    <script>
+        alert("User ID not found")
+        window.location.href = "{{ url_for('admin_payment_reminder') }}";
+    </script>
+    {% endif %}
+</body>
+
+</html> 
+
+<!-- <script>
+    // Get the current date
+    var currentDate = new Date();
+
+    // Add 1 month to the current date
+    var newDate = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+
+    // Format the new date as "YYYY-MM-DD"
+    var formattedDate = newDate.toISOString().split('T')[0];
+
+    // Set the default value of the input field to the new date
+    document.getElementById("deadline").value = formattedDate;
+</script> -->

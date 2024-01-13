@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    {% include 'navbar.html' %}
+</head>
+
+<body>
+    <main class="grid">
+        <div class="left-side">
+            <img src="{{ url_for('static', filename='images/logo-s.png') }}" alt="logo-s">
+            <h1>Homeowners</h1>
+            <h5>FINANCE</h5>
+        </div> 
+        <div class="login">
+            <h1>Welcome Back</h1>
+            <form action="/login" method="POST">
+                <fieldset id="set-1">
+                    <label for="username">Username:
+                        <input type="text" name="username" required pattern="^\S{3,}$"
+                            title="Username must have 3 character and does not have space" autofocus>
+                    </label>
+                    <label for="password">Password:
+                        <input type="password" name="password" required pattern="^\S{3,}$"
+                            title="Password must have 3 character and does not have space">
+                    </label>
+                </fieldset>
+
+                <fieldset id="set-2">
+                    <input type="submit" value="Login">
+                </fieldset>
+
+                {% if "reminder" in session: %}
+                <label>
+                    <input type="checkbox" class="alertCheckbox" autocomplete="off" />
+                    <div class="alert error">
+                        <span class="alertText">{%print(session['reminder'])%}</span>
+                        <br class="clear" />
+                    </div>
+                </label>
+                {% endif %}
+
+            </form>
+        </div>
+    </main>
+    <!-- Alert -->
+
+</body>
+
+</html>
+
+
+
+{# {%extends "home.html"%}{% block title%}Login{% endblock %}
+{% block content%}
+
+<form action="" method="post" align="center">
+    <h3 align="center">Login</h3>
+    <div class="form-group">
+        <label for="username">Email</label>
+        <input type="text" name="username" id="username" placeholder="Enter username">
+    </div><br>
+    <div class="form-group">
+        <label for="passowrd">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter Password">
+    </div><br>
+
+    <button type="submit" value="Submit" class="btn btn-success">Login</button>
+</form>
+</div>
+</div>
+{% endblock %} #}
