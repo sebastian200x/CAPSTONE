@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Reminder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/member/payment_reminder.css') }}">
-    {% include 'navbar.html' %}
+    {% include 'navbar.html' %} 
 </head>
 
 <body>
     {% if remind %}
-
+    {% for reminder in remind %}
     <div class="yellow bg">
         <div class="warning-sign">
             <img src="{{ url_for('static', filename='images/remind-exclamation.svg') }}" alt="Image">
@@ -19,11 +19,12 @@
         <div class="warning-text">
             <h1>REMINDER!</h1>
             <h5>Approaching Due Date!</h5>
-            <p>You have existing balance to be paid of: {{remind[4]}} </p>
+            <p>You have existing balance to be paid of: {{remind[4]}}</p>
+            <p>Due date: {{remind[6]}}</p>
             <button type="button">Pay<i class="fa-solid fa-chevron-right"></i></button>
-
         </div>
     </div>
+    {% endfor %}
 
     <!-- <div class="red bg">
         <div class="warning-sign">
@@ -40,6 +41,7 @@
     </div> -->
 
     {% endif %}
+
 </body>
 
 </html>

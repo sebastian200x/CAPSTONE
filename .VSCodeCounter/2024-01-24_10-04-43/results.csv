@@ -1,0 +1,87 @@
+"filename", "language", "HTML", "JavaScript", "XML", "pip requirements", "Python", "CSS", "comment", "blank", "total"
+"d:\Programming\CAPSTONE\.1 face_rec\CV2Flask_tester.py", "Python", 0, 0, 0, 0, 22, 0, 0, 6, 28
+"d:\Programming\CAPSTONE\.1 face_rec\CV_tester.py", "Python", 0, 0, 0, 0, 9, 0, 5, 5, 19
+"d:\Programming\CAPSTONE\.1 face_rec\Classifier_tester.py", "Python", 0, 0, 0, 0, 12, 0, 4, 8, 24
+"d:\Programming\CAPSTONE\.1 face_rec\app.py", "Python", 0, 0, 0, 0, 179, 0, 16, 59, 254
+"d:\Programming\CAPSTONE\.1 face_rec\app2.py", "Python", 0, 0, 0, 0, 179, 0, 17, 59, 255
+"d:\Programming\CAPSTONE\.1 face_rec\classifier.xml", "XML", 0, 0, 156793, 0, 0, 0, 0, 1, 156794
+"d:\Programming\CAPSTONE\.1 face_rec\requirements.txt", "pip requirements", 0, 0, 0, 49, 0, 0, 0, 0, 49
+"d:\Programming\CAPSTONE\.1 face_rec\resources\classifier.xml", "XML", 0, 0, 156793, 0, 0, 0, 0, 1, 156794
+"d:\Programming\CAPSTONE\.1 face_rec\resources\haarcascade_frontalface_default.xml", "XML", 0, 0, 29818, 0, 0, 0, 5894, 1, 35713
+"d:\Programming\CAPSTONE\.1 face_rec\static\css\bootstrap.min.css", "CSS", 0, 0, 0, 0, 0, 1, 6, 0, 7
+"d:\Programming\CAPSTONE\.1 face_rec\static\css\font-awesome.min.css", "CSS", 0, 0, 0, 0, 0, 1, 3, 1, 5
+"d:\Programming\CAPSTONE\.1 face_rec\static\css\style.css", "CSS", 0, 0, 0, 0, 0, 8, 0, 2, 10
+"d:\Programming\CAPSTONE\.1 face_rec\static\js\bootstrap.min.js", "JavaScript", 0, 1, 0, 0, 0, 0, 6, 0, 7
+"d:\Programming\CAPSTONE\.1 face_rec\static\js\form.js", "JavaScript", 0, 24, 0, 0, 0, 0, 0, 5, 29
+"d:\Programming\CAPSTONE\.1 face_rec\static\js\jquery.min.js", "JavaScript", 0, 3, 0, 0, 0, 0, 1, 0, 4
+"d:\Programming\CAPSTONE\.1 face_rec\templates\addprsn.html", "HTML", 48, 0, 0, 0, 0, 0, 0, 3, 51
+"d:\Programming\CAPSTONE\.1 face_rec\templates\fr_page.html", "HTML", 16, 0, 0, 0, 0, 0, 0, 5, 21
+"d:\Programming\CAPSTONE\.1 face_rec\templates\gendataset.html", "HTML", 24, 0, 0, 0, 0, 0, 0, 4, 28
+"d:\Programming\CAPSTONE\.1 face_rec\templates\head.html", "HTML", 8, 0, 0, 0, 0, 0, 0, 3, 11
+"d:\Programming\CAPSTONE\.1 face_rec\templates\index.html", "HTML", 50, 0, 0, 0, 0, 0, 0, 5, 55
+"d:\Programming\CAPSTONE\.1 face_rec\templates\navbar.html", "HTML", 8, 0, 0, 0, 0, 0, 2, 0, 10
+"d:\Programming\CAPSTONE\.1 face_rec\templates\opencvtester.html", "HTML", 10, 0, 0, 0, 0, 0, 0, 0, 10
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\Members Payment\payment.css", "CSS", 0, 0, 0, 0, 0, 42, 6, 4, 52
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\Members Payment\payment.html", "HTML", 22, 0, 0, 0, 0, 0, 0, 1, 23
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\Members_info\members_info.css", "CSS", 0, 0, 0, 0, 0, 111, 6, 8, 125
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\Members_info\members_info.html", "HTML", 98, 0, 0, 0, 0, 0, 4, 12, 114
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\Payment History\history.css", "CSS", 0, 0, 0, 0, 0, 67, 2, 4, 73
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\Payment History\history.html", "HTML", 53, 0, 0, 0, 0, 0, 0, 8, 61
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\ReminderPayment\payment.css", "CSS", 0, 0, 0, 0, 0, 63, 2, 5, 70
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\ReminderPayment\payment.html", "HTML", 54, 0, 0, 0, 0, 0, 0, 9, 63
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\account register\accountRegister.css", "CSS", 0, 0, 0, 0, 0, 208, 13, 37, 258
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\account register\accountRegister.html", "HTML", 79, 0, 0, 0, 0, 0, 14, 13, 106
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\payment Reminder\paymentReminder.css", "CSS", 0, 0, 0, 0, 0, 48, 1, 2, 51
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\payment Reminder\paymentReminder.html", "HTML", 23, 0, 0, 0, 0, 0, 0, 0, 23
+"d:\Programming\CAPSTONE\.2 Di kasali to\Homeowner New Era\payment Reminder\triangle-exclamation-solid.svg", "XML", 0, 0, 1, 0, 0, 0, 0, 0, 1
+"d:\Programming\CAPSTONE\.2 Di kasali to\Retes\accountCreated.html", "HTML", 24, 0, 0, 0, 0, 0, 1, 3, 28
+"d:\Programming\CAPSTONE\.2 Di kasali to\Retes\index.html", "HTML", 22, 0, 0, 0, 0, 0, 0, 1, 23
+"d:\Programming\CAPSTONE\.2 Di kasali to\Retes\login.html", "HTML", 41, 0, 0, 0, 0, 0, 3, 8, 52
+"d:\Programming\CAPSTONE\.2 Di kasali to\Retes\paymentVerfication.html", "HTML", 23, 0, 0, 0, 0, 0, 1, 3, 27
+"d:\Programming\CAPSTONE\.2 Di kasali to\Retes\registerAccount.html", "HTML", 23, 0, 0, 0, 0, 0, 1, 4, 28
+"d:\Programming\CAPSTONE\.2 Di kasali to\Retes\styles.css", "CSS", 0, 0, 0, 0, 0, 109, 14, 15, 138
+"d:\Programming\CAPSTONE\.3 To Delete\memberspayment.html", "HTML", 53, 0, 0, 0, 0, 0, 2, 13, 68
+"d:\Programming\CAPSTONE\.3 To Delete\payment.html", "HTML", 16, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\Programming\CAPSTONE\.3 To Delete\register.html", "HTML", 203, 0, 0, 0, 0, 0, 11, 36, 250
+"d:\Programming\CAPSTONE\.3 To Delete\signup.html", "HTML", 31, 0, 0, 0, 0, 0, 0, 17, 48
+"d:\Programming\CAPSTONE\.3 To Delete\test.py", "Python", 0, 0, 0, 0, 30, 0, 6, 12, 48
+"d:\Programming\CAPSTONE\.3 To Delete\time.py", "Python", 0, 0, 0, 0, 6, 0, 2, 4, 12
+"d:\Programming\CAPSTONE\.idea\CAPSTONE.iml", "XML", 0, 0, 10, 0, 0, 0, 0, 0, 10
+"d:\Programming\CAPSTONE\.idea\inspectionProfiles\profiles_settings.xml", "XML", 0, 0, 6, 0, 0, 0, 0, 0, 6
+"d:\Programming\CAPSTONE\.idea\misc.xml", "XML", 0, 0, 10, 0, 0, 0, 0, 0, 10
+"d:\Programming\CAPSTONE\.idea\modules.xml", "XML", 0, 0, 8, 0, 0, 0, 0, 0, 8
+"d:\Programming\CAPSTONE\.idea\vcs.xml", "XML", 0, 0, 6, 0, 0, 0, 0, 0, 6
+"d:\Programming\CAPSTONE\app.py", "Python", 0, 0, 0, 0, 464, 0, 87, 100, 651
+"d:\Programming\CAPSTONE\requirements.txt", "pip requirements", 0, 0, 0, 39, 0, 0, 0, 0, 39
+"d:\Programming\CAPSTONE\static\css\admin\edit_info.css", "CSS", 0, 0, 0, 0, 0, 82, 3, 21, 106
+"d:\Programming\CAPSTONE\static\css\admin\members_info.css", "CSS", 0, 0, 0, 0, 0, 63, 5, 16, 84
+"d:\Programming\CAPSTONE\static\css\admin\members_reg.css", "CSS", 0, 0, 0, 0, 0, 66, 3, 13, 82
+"d:\Programming\CAPSTONE\static\css\admin\members_reg_face.css", "CSS", 0, 0, 0, 0, 0, 45, 3, 2, 50
+"d:\Programming\CAPSTONE\static\css\admin\payment_history.css", "CSS", 0, 0, 0, 0, 0, 70, 2, 13, 85
+"d:\Programming\CAPSTONE\static\css\admin\payment_remind.css", "CSS", 0, 0, 0, 0, 0, 56, 0, 9, 65
+"d:\Programming\CAPSTONE\static\css\admin\payment_reminder.css", "CSS", 0, 0, 0, 0, 0, 58, 5, 13, 76
+"d:\Programming\CAPSTONE\static\css\admin\view_history.css", "CSS", 0, 0, 0, 0, 0, 38, 1, 1, 40
+"d:\Programming\CAPSTONE\static\css\index.css", "CSS", 0, 0, 0, 0, 0, 25, 0, 6, 31
+"d:\Programming\CAPSTONE\static\css\login.css", "CSS", 0, 0, 0, 0, 0, 154, 5, 39, 198
+"d:\Programming\CAPSTONE\static\css\member\payment.css", "CSS", 0, 0, 0, 0, 0, 46, 6, 14, 66
+"d:\Programming\CAPSTONE\static\css\member\payment_history.css", "CSS", 0, 0, 0, 0, 0, 67, 2, 4, 73
+"d:\Programming\CAPSTONE\static\css\member\payment_reminder.css", "CSS", 0, 0, 0, 0, 0, 68, 0, 14, 82
+"d:\Programming\CAPSTONE\static\css\navbar.css", "CSS", 0, 0, 0, 0, 0, 166, 36, 42, 244
+"d:\Programming\CAPSTONE\static\images\remind-exclamation.svg", "XML", 0, 0, 1, 0, 0, 0, 0, 0, 1
+"d:\Programming\CAPSTONE\static\js\navbar.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"d:\Programming\CAPSTONE\templates\admin\edit_info.html", "HTML", 108, 0, 0, 0, 0, 0, 0, 5, 113
+"d:\Programming\CAPSTONE\templates\admin\members_info.html", "HTML", 88, 0, 0, 0, 0, 0, 1, 6, 95
+"d:\Programming\CAPSTONE\templates\admin\members_reg.html", "HTML", 227, 0, 0, 0, 0, 0, 5, 39, 271
+"d:\Programming\CAPSTONE\templates\admin\members_reg_face.html", "HTML", 25, 0, 0, 0, 0, 0, 0, 5, 30
+"d:\Programming\CAPSTONE\templates\admin\payment_history.html", "HTML", 42, 0, 0, 0, 0, 0, 0, 4, 46
+"d:\Programming\CAPSTONE\templates\admin\payment_remind.html", "HTML", 29, 0, 0, 0, 0, 0, 13, 4, 46
+"d:\Programming\CAPSTONE\templates\admin\payment_reminder.html", "HTML", 67, 0, 0, 0, 0, 0, 59, 12, 138
+"d:\Programming\CAPSTONE\templates\admin\view_history.html", "HTML", 28, 0, 0, 0, 0, 0, 1, 4, 33
+"d:\Programming\CAPSTONE\templates\index.html", "HTML", 19, 0, 0, 0, 0, 0, 0, 3, 22
+"d:\Programming\CAPSTONE\templates\login.html", "HTML", 63, 0, 0, 0, 0, 0, 1, 12, 76
+"d:\Programming\CAPSTONE\templates\member\payment.html", "HTML", 23, 0, 0, 0, 0, 0, 0, 4, 27
+"d:\Programming\CAPSTONE\templates\member\payment_history.html", "HTML", 40, 0, 0, 0, 0, 0, 0, 4, 44
+"d:\Programming\CAPSTONE\templates\member\payment_reminder.html", "HTML", 28, 0, 0, 0, 0, 0, 13, 6, 47
+"d:\Programming\CAPSTONE\templates\member\payment_verification.html", "HTML", 12, 0, 0, 0, 0, 0, 0, 4, 16
+"d:\Programming\CAPSTONE\templates\navbar.html", "HTML", 68, 0, 0, 0, 0, 0, 7, 9, 84
+"Total", "-", 1796, 28, 343446, 88, 901, 1662, 6301, 820, 355042

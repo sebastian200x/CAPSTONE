@@ -7,8 +7,10 @@ app = Flask(__name__)
 @app.route('/')
 def test_classifier():
     # Load the Haar classifier file
-    classifier = cv2.CascadeClassifier(
-        "resources/haarcascade_frontalface_default.xml")
+    # classifier = cv2.CascadeClassifier(
+    #     "resources/haarcascade_frontalface_default.xml")
+    classifier = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+)
 
     # Check if the classifier is loaded successfully
     if classifier.empty():

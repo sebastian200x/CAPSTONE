@@ -13,20 +13,17 @@
 <body>
     <main class="grid">
         <div class="left-side">
-            <img src="logo-s.png" alt="">
+            <img src="{{ url_for('static', filename='images/logo-s.png')}}" alt="logo">
             <h1>Homeowners</h1>
             <h5>FINANCE</h5>
         </div>
 
         <div class="right-side">
             <h2>Register Account</h2>
-
-            <!-- check or X na icon ikaw na bahala dyan hahahh -->
-            <img src="logo-s.png" alt=""><br>
-
+            <img src="{{ url_for('static', filename='images/logo-s.png')}}" alt="camera"><br>
+            {# <img src="{{ url_for('video_feed') }}" width="100%" class="img-thumbnail"> #}
             <button>Open Camera</button>
         </div>
     </main>
-</body> 
-
+</body>
 </html>

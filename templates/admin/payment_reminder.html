@@ -10,7 +10,101 @@
 </head>
 
 <body>
-    <div class="table">
+
+    <h1>PAYMENT REMINDER</h1>
+
+    <h2>New Users:</h2>
+    <div class="scrollable">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for newacc in new %}
+                <tr>
+                    <td>{{newacc[15]}}, {{newacc[13]}} {{newacc[14]}}</td>
+                    <td>{{newacc[10]}}</td>
+                    <td>
+                        <a class="button remind" href="/admin/payment_remind/{{newacc[1]}}">Remind</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">There is no one to remind</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Failed To Pay Last Reminder:</h2>
+    <div class="scrollable">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for newacc in new %}
+                <tr>
+                    <td>{{newacc[15]}}, {{newacc[13]}} {{newacc[14]}}</td>
+                    <td>{{newacc[10]}}</td>
+                    <td>
+                        <a class="button remind" href="/admin/payment_remind/{{newacc[1]}}">Remind</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">There is no one to remind</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!-- 
+    <h2>Complete User Information:</h2>
+    <div class="scrollable">
+        <table class="table">
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Action</th>
+            </tr>
+            {% if complete %}
+            {% for completed in complete %}
+            <tr>
+                <td>{{ completed[15] }}</td>
+                <td>{{ completed[13] }}</td>
+                <td>{{ completed[14] }}</td>
+                <td>
+                    <form method="POST" action="/admin/edit_info/{{completed[1]}}">
+                        <input type="submit" class="edit button" value="&#xf044; EDIT">
+                        <input type="submit" class="delete button" value="&#xf2ed; DELETE"
+                            formaction="/admin/delete_info/{{completed[1]}}"
+                            onclick="return confirm('Are you sure you want to delete this account?')">
+                    </form>
+                </td>
+                {% endfor %}
+                {% else %}
+                <td colspan="4">No Result</td>
+                {% endif %}
+            </tr>
+    </div>
+ -->
+
+
+    <!-- <div class="table">
         <h1>Payment Reminder</h1>
         <table>
             <thead>
@@ -37,7 +131,7 @@
             </tbody>
         </table>
 
-    </div>
+    </div> -->
 
 </body>
 

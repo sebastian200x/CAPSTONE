@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/members_reg_face_cam.css') }}">
+    {% include 'navbar.html' %}
+    <title>Face Registration</title>
+
+</head>
+
+<body>
+    <main class="grid">
+        <div class="left-side">
+            <img src="{{ url_for('static', filename='images/logo-s.png')}}" alt="logo">
+            <h1>Homeowners</h1>
+            <h5>FINANCE</h5>
+        </div>
+
+        <div class="right-side">
+            <h2>Register Account</h2>
+            <img src="{{ url_for('static', filename='images/logo-s.png')}}" alt="camera"><br>
+            {# <img src="{{ url_for('video_feed') }}" width="100%" class="img-thumbnail"> #}
+            <button>Open Camera</button>
+        </div>
+    </main>
+</body>
+
+</html>

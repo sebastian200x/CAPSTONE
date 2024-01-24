@@ -9,4 +9,42 @@
     flex-direction: column;
     justify-content: center;
     align-items: center ;
-} 
+}
+.left-side img{
+    width: 150px;
+}
+/* paayos nalang fontsize hahaha */
+.left-side h1{
+   letter-spacing: 2px;
+}
+.left-side h5{
+    color: gray;
+}
+
+/* right-side shit */
+.right-side{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows:repeat(3,1fr) ;
+    justify-items: center;
+    background-color: #6FB9B9;
+}
+h2{
+    text-align: center;
+}
+.right-side h2{
+    grid-column: span 3;
+    align-self: center;
+}
+.right-side img{
+    grid-column: 2;
+    
+}
+.right-side button{
+    grid-column: span 3;
+    align-self: start;   
+}
+button{
+    padding: 10px 20px;
+    border-radius: 5px;
+}

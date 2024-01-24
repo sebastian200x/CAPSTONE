@@ -6,24 +6,28 @@ from flask import (
     flash,
     redirect,
     session,
-    jsonify,
 )
 
-# from datetime import datetime
-from flask_mysqldb import MySQL
+import flask_socketio
+
+import mysql.connector
+
 from datetime import datetime, timedelta, date
 
-# import datetime
+mydb = mysql.connector.connect(
+    host="localhost", user="root", passwd="", database="dbhofin"
+)
+# mydb = mysql.connector.connect(host="www.db4free.net", user="sebastian200x", passwd="jds09122128032", database="dbhofin")
 
 app = Flask(__name__)
 app.secret_key = "capstone"
 
-# Database for localhost 
+# Database for localhost
 
-app.config["MYSQL_HOST"] = "localhost"
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = ""
-app.config["MYSQL_DB"] = "dbhofin"
+# app.config["MYSQL_HOST"] = "localhost"
+# app.config["MYSQL_USER"] = "root"
+# app.config["MYSQL_PASSWORD"] = ""
+# app.config["MYSQL_DB"] = "dbhofin"
 
 # Database for online database
 
@@ -33,8 +37,7 @@ app.config["MYSQL_DB"] = "dbhofin"
 # app.config['MYSQL_DB'] = 'dbhofin'
 # app.config['MYSQL_PORT'] = 3306
 
-
-mysql = MySQL(app)
+# mysql = MySQL(app)
 
 
 # session checker if logged in it will redirect to respective homepage
@@ -90,7 +93,7 @@ def active_sessions():
 @app.route("/")
 def index():
     # Temporary admin creator for 1st time opened
-    create = mysql.connection.cursor()
+    create = mydb.cursor()
     create.execute("SELECT * FROM tbl_useracc WHERE is_admin='yes' AND is_deleted='no'")
     result = create.fetchall()
     if len(result) == 0:
@@ -100,7 +103,7 @@ def index():
         create.execute(
             "INSERT INTO `tbl_userinfo`(`userinfo_id`, `user_id`, `given_name`) VALUES ('1','1','Admin')"
         )
-        mysql.connection.commit()
+        mydb.commit()
         create.close()
     return userchecker("index.html")
 
@@ -111,19 +114,19 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        sql = mysql.connection.cursor()
-        sql.execute(
+        login = mydb.cursor()
+        login.execute(
             "SELECT * FROM tbl_useracc WHERE username=%s AND password=%s",
             (username, password),
         )
-        result = sql.fetchall()
+        result = login.fetchall()
         if len(result) != 0:
             if result[0][5] == "no":
-                sql.execute(
+                login.execute(
                     "SELECT * FROM tbl_useracc, tbl_userinfo WHERE tbl_useracc.username = %s AND tbl_useracc.password = %s AND tbl_useracc.user_id = tbl_userinfo.user_id",
                     (username, password),
                 )
-                info = sql.fetchone()
+                info = login.fetchone()
                 if "login_attempts" not in session or session["login_attempts"] != 0:
                     is_admin = info[4]
                     fullname = info[8] + " " + info[10]
@@ -189,7 +192,7 @@ def login():
 
 @app.route("/admin/members_reg", methods=["POST", "GET"])
 def admin_members_reg():
-    last = mysql.connection.cursor()
+    last = mydb.cursor()
     last.execute("SELECT user_id FROM tbl_useracc ORDER BY user_id DESC LIMIT 1")
     last_row = last.fetchone()
     if last_row:
@@ -208,37 +211,18 @@ def admin_members_reg():
         password = request.form["password"]
         email = request.form["email"]
 
-        register = mysql.connection.cursor()
+        register = mydb.cursor()
 
         try:
             register.execute(
-                """
-    INSERT INTO tbl_useracc(
-    username,
-    password,
-    email,
-    is_admin,
-    is_deleted
-    )
-    VALUES(% s, % s, % s, % s, % s)
-                """,
+                "INSERT INTO tbl_useracc(username, password, email, is_admin, is_deleted) VALUES(%s, %s, %s, %s, %s)",
                 (username, password, email, "no", "no"),
             )
 
             id = register.lastrowid
 
             register.execute(
-                """
-    INSERT INTO tbl_userinfo(
-    userinfo_id,
-    user_id,
-    given_name,
-    middle_name,
-    last_name,
-    gender
-    )
-    VALUES( % s, % s, % s, % s, % s, % s)
-               """,
+                "INSERT INTO tbl_userinfo(userinfo_id, user_id, given_name, middle_name, last_name, gender) VALUES( %s, %s, %s, %s, %s, %s)",
                 (id, id, given_name, middle_name, last_name, gender),
             )
 
@@ -247,12 +231,12 @@ def admin_members_reg():
                 (id, id),
             )
 
-            mysql.connection.commit()
+            mydb.commit()
             register.close()
             flash("Registration successful!", "success")
 
         except Exception as e:
-            mysql.connection.rollback()
+            mydb.rollback()
             register.close()
             flash(
                 "Registration failed. Please try again. Error: {}".format(str(e)),
@@ -272,29 +256,28 @@ def admin_members_info():
     # inc.execute(
     #     "SELECT * FROM tbl_property, tbl_useracc, tbl_userinfo WHERE tbl_property.blk_no IS NULL AND tbl_property.lot_no IS NULL AND tbl_property.homelot_area IS NULL AND tbl_property.open_space IS NULL AND tbl_property.sharein_loan IS NULL AND tbl_property.principal_interest IS NULL AND tbl_property.MRI IS NULL AND tbl_property.total IS NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no';"
     # )
-    inc = mysql.connection.cursor()
+    inc = mydb.cursor()
     inc.execute(
         """
     SELECT *
     FROM tbl_property
-    JOIN tbl_userinfo 
-    JOIN tbl_useracc 
-    ON tbl_property.user_id = tbl_userinfo.user_id AND tbl_property.user_id = tbl_useracc.user_id
+    JOIN tbl_userinfo ON tbl_property.user_id = tbl_userinfo.user_id
+    JOIN tbl_useracc ON tbl_property.user_id = tbl_useracc.user_id
     WHERE is_admin = "no" 
         AND is_deleted = "no"
-        AND blk_no IS NULL 
+        AND (blk_no IS NULL 
         OR lot_no IS NULL 
         OR homelot_area IS NULL 
         OR open_space IS NULL 
         OR sharein_loan IS NULL 
         OR principal_interest IS NULL 
         OR MRI IS NULL 
-        OR total IS NULL
+        OR total IS NULL)
         """
     )
     inc = inc.fetchall()
 
-    complete = mysql.connection.cursor()
+    complete = mydb.cursor()
     complete.execute(
         """
     SELECT *
@@ -321,7 +304,7 @@ def admin_members_info():
 
 @app.route("/admin/edit_info/<int:id>", methods=["POST", "GET"])
 def admin_edit_info(id):
-    info = mysql.connection.cursor()
+    info = mydb.cursor()
     info.execute(
         """
     SELECT * 
@@ -339,7 +322,7 @@ def admin_edit_info(id):
 
 @app.route("/admin/delete_info/<int:id>", methods=["POST", "GET"])
 def delete_info(id):
-    delete = mysql.connection.cursor()
+    delete = mydb.cursor()
     try:
         delete.execute(
             """
@@ -352,7 +335,7 @@ def delete_info(id):
             """,
             (id,),
         )
-        mysql.connection.commit()
+        mydb.commit()
         flash("Account deleted successfully!", "success")
     except Exception as e:
         flash(f"Error deleting account: {str(e)}", "error")
@@ -376,7 +359,9 @@ def update_info(id):
     principal_interest = request.form.get("principal_interest")
     MRI = request.form.get("MRI")
     total = request.form.get("total")
-    update = mysql.connection.cursor()
+
+    update = mydb.cursor()
+
     try:
         update.execute(
             """
@@ -422,7 +407,7 @@ def update_info(id):
                 id,
             ),
         )
-        mysql.connection.commit()
+        mydb.commit()
         update.close()
         flash("Account updated successfully!", "success")
     except Exception as e:
@@ -432,7 +417,7 @@ def update_info(id):
 
 @app.route("/admin/payment_history", methods=["POST", "GET"])
 def admin_payment_history():
-    history = mysql.connection.cursor()
+    history = mydb.cursor()
     history.execute(
         """
         SELECT tbl_transaction.*, tbl_userinfo.*
@@ -448,7 +433,7 @@ def admin_payment_history():
 
 @app.route("/admin/view_history/<int:id>", methods=["POST", "GET"])
 def admin_view_history(id):
-    view = mysql.connection.cursor()
+    view = mydb.cursor()
     view.execute(
         """
         SELECT *
@@ -464,8 +449,8 @@ def admin_view_history(id):
 
 @app.route("/admin/payment_reminder", methods=["POST", "GET"])
 def admin_payment_reminder():
-    remind = mysql.connection.cursor()
-    remind.execute(
+    new = mydb.cursor()
+    new.execute(
         """
         SELECT
             tbl_property.*,
@@ -483,13 +468,14 @@ def admin_payment_reminder():
         ) AND tbl_property.total IS NOT NULL AND tbl_useracc.is_admin = 'no' AND tbl_useracc.is_deleted = 'no'  
         """
     )
-    remind = remind.fetchall()
-    return adminredirect("admin/payment_reminder.html", remind=remind)
+    new = new.fetchall()
+
+    return adminredirect("admin/payment_reminder.html", new=new)
 
 
 @app.route("/admin/payment_remind/<int:id>", methods=["POST", "GET"])
 def admin_payment_remind(id):
-    reminder = mysql.connection.cursor()
+    reminder = mydb.cursor()
     reminder.execute(
         """
     SELECT tbl_property.total, tbl_userinfo.*
@@ -518,7 +504,7 @@ def admin_payment_remind_remind(id):
     date_conv = datetime.strptime(due, "%Y-%m-%d")
     due_conv = date_conv.strftime("%Y-%m-%d")
     amount = request.form.get("amount")
-    reminding = mysql.connection.cursor()
+    reminding = mydb.cursor()
     reminding.execute(
         """
     INSERT INTO `tbl_transaction`(
@@ -540,32 +526,36 @@ def admin_payment_remind_remind(id):
             due_conv,
         ),
     )
-    mysql.connection.commit()
+    mydb.commit()
     reminding.close()
     return redirect(url_for("admin_payment_reminder"))
 
 
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
 def member_payment_reminder():
-    remind = mysql.connection.cursor()
+    remind = mydb.cursor()
     user_id = session["user_id"]
     remind.execute(
         """
-        
         SELECT
             *
         FROM
             `tbl_transaction`
         WHERE
             transc_type = "reminder" AND user_id = %s
-        ;
-
+        ORDER BY 
+            due_date;
         """,
         (user_id,),
     )
-    remind = remind.fetchone()
+    remind = remind.fetchall()
+    count = len(remind)
+    
+    # get all rows in sql that doesnt have duplicate in due_date column in the same ID and in the specific id only
+    # SELECT * FROM your_table_name WHERE ID = 'your_specific_id' GROUP BY due_date HAVING COUNT(*) = 1;
+    # SELECT * FROM tbl_transaction WHERE user_id = '2' GROUP BY user_id, due_date HAVING COUNT(*) = 1;
 
-    return memberredirect("member/payment_reminder.html", remind=remind)
+    return memberredirect("member/payment_reminder.html", remind=remind, count=count)
 
 
 @app.route("/member/payment/<int:payment_info>", methods=["POST", "GET"])
@@ -590,7 +580,7 @@ def logout():
 
 
 #     #pang call nang or view nang mga data
-#     quer=mysql.connection.cursor()
+#     quer=mydb.cursor()
 # #pang execute nang database
 #     quer.execute("SELECT * FROM tbl_userinfo")
 #     data=quer.fetchall()
@@ -606,9 +596,9 @@ def logout():
 # @app.route("/delete/<string:id_data>", methods=["GET", "POST"])
 # def delete(id_data):
 #     flash("Record Has Been Deleted Successfully")
-#     sql = mysql.connection.cursor()
+#     sql = mydb.cursor()
 #     sql.execute("DELETE FROM tbl_userinfo WHERE userinfo_id=%s", (id_data,))
-#     mysql.connection.commit()
+#     mydb.commit()
 #     return redirect(url_for("Home"))
 
 
@@ -619,9 +609,9 @@ def logout():
 #         userid = id
 #         option = request.form.get("option")
 
-#         sql = mysql.connection.cursor()
+#         sql = mydb.cursor()
 #         sql.execute("SELECT * FROM tbl_transaction WHERE user_id=%s", [userid])
-#         mysql.connection.commit()
+#         mydb.commit()
 #         data = sql.fetchall()
 #         for row in data:
 #             debt = row[2]
@@ -632,11 +622,11 @@ def logout():
 #                 "UPDATE tbl_transaction SET balance_debt=%s, transac_type=%s ,amount=%s,date=%s WHERE user_id=%s",
 #                 (totalamt, option, amount, format, userid),
 #             )
-#             mysql.connection.commit()
+#             mydb.commit()
 #             sql.execute(
 #                 "UPDATE tbl_userinfo SET Total=%s WHERE user_id=%s", (totalamt, userid)
 #             )
-#             mysql.connection.commit()
+#             mydb.commit()
 #             sql.close()
 #             return redirect(url_for("Home2"))
 #     else:
@@ -654,3 +644,7 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True, port="6969")
+
+
+# to make it accessible to other device in the same network use this:
+# flask run --host=0.0.0.0

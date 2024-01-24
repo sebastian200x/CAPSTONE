@@ -1,24 +1,47 @@
-.table {
-    margin-top: 100px;
-    text-align: center;
-
+body {
+    margin-top: 90px;
 }
 
-table {
-    width: 80%;
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-top: 2%;
+    padding: 1%;
+}
+
+.scrollable {
+    max-height: 300px;
+    /* Set the maximum height for the scrollable area */
+    overflow-y: scroll;
+    /* Enable vertical scrolling */
+}
+
+.table {
+    width: 100%;
     border-collapse: collapse;
     text-align: center;
-    margin: 40px auto;
+    padding: 0;
 }
 
-.table td,
+.table td, 
 .table th {
-    border: 2px solid black;
-    padding: 8px;
+    border: 1px solid black;
+    padding: 1%;
 }
 
-table thead {
-    font-weight: bold;
+th {
+    background-color: #f2f2f2;
+    /* Set a background color for the header */
+    position: sticky;
+    top: 0;
+    outline: 1px solid black;
+    /* Stick the header to the top of the scrollable area */
+}
+
+td:last-child {
+    width: 20%;
 }
 
 .button {
@@ -32,4 +55,22 @@ table thead {
 
 .remind {
     background-color: #ffd60b;
+}
+
+/* responsive */
+@media screen and (max-width:500px) {
+
+    .personal-information,
+    .property-information {
+        grid-template-columns: 1fr;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .buttons button {
+        width: 100px;
+    }
 }
