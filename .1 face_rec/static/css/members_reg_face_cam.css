@@ -1,3 +1,9 @@
+*{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
 .grid {
     height: 100vh;
     display: grid;
@@ -5,54 +11,60 @@
 }
 
 /* para sa left side gamit ko flexshit */
-.grid .left-side {
+.grid .left-side, .right-side {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .left-side img {
     width: 150px;
+    
 }
 
-/* paayos nalang fontsize hahaha */
 .left-side h1 {
     letter-spacing: 2px;
+
 }
 
 .left-side h5 {
     color: gray;
 }
 
-/* right-side shit */
 .right-side {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    justify-items: center;
-    background-color: #6FB9B9;
-}
-
-h2 {
     text-align: center;
+    background-color: #6FB9B9;
+    justify-content: space-around;
 }
 
-.right-side h2 {
-    grid-column: span 3;
-    align-self: center;
+.parent-image{
+    aspect-ratio: auto 4 / 3; 
+    width: 100%; 
 }
-
-.right-side img {
-    grid-column: 2;
-
-}
-
-.right-side button {
-    grid-column: span 3;
-    align-self: start;
+.parent-image img{
+    box-sizing: border-box;
+    padding: 3%;
+    width: 100%;
 }
 
 button {
     padding: 10px 20px;
     border-radius: 5px;
 }
+
+@media only screen and (max-width: 700px) {
+    .grid{
+       grid-template-columns: 1fr;
+    }
+    .grid .left-side{
+        display: none;
+    }
+    .right-side{
+        display: block;
+    }
+    .right-side h2{
+        margin-bottom: 25px;
+    }
+  }

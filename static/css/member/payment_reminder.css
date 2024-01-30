@@ -1,48 +1,55 @@
-* {
-    box-sizing: border-box;
+body {
+    margin-top: 100px;
 }
 
-.bg {
-    width: 50%;
-    height: 350px;
-    margin: 0 auto;
-    border-radius: 20px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+* {
+    box-sizing: border-box;
+    /* border: 1px solid red; */
 }
 
 .yellow {
+    width: 100%;
     background-color: #FFDE59;
+    /* background-color: #d0342c; */
 }
 
 .red {
-    background-color: #d0342c;
+    width: 100%;
+    background-color: #ff3949;
     color: white;
 }
 
-img {
-    width: 100%;
+.container {
+    width: 24%;
+    height: 350px;
+    float: left;
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 20px;
+    margin-left: 1%;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
-.invert {
-    filter: invert(100%);
+.container:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.warning-sign {
+    width: 20%;
 }
 
 .warning-text {
-    flex: 1;
     text-align: center;
 }
 
-h1 {
+.warning-text h1 {
     letter-spacing: 2px;
-    margin-bottom: 20px;
 }
 
 h5 {
@@ -51,32 +58,26 @@ h5 {
     margin-bottom: 20px;
 }
 
-p {
-    margin-bottom: 20px;
-
-}
-
-button {
+.pay {
     width: 60%;
     padding: 10px;
     cursor: pointer;
     border-radius: 5px;
+    margin-top: 15%;
 }
 
-.fa-chevron-right {
-    float: right;
-    margin-right: 10px;
-}
 
-@media screen and (max-width:520px) {
-    .yellow-bg {
-        width: 80%;
-        height: auto;
-        flex-direction: column;
-        align-items: center;
+
+@media screen and (max-width:940px) {
+    .container {
+        width: 100%;
+        margin: 10px auto;
     }
 
-    img {
-        width: 150px;
+}
+
+@media screen and (max-width:500px) {
+    .container {
+        margin: 10px auto;
     }
 }

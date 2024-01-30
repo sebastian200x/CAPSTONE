@@ -71,6 +71,8 @@ def memberredirect(dir, **args):
             return render_template(dir, **args)
     else:
         return redirect(url_for("login"))
+    
+    
 
 
 # username generator
@@ -534,7 +536,7 @@ def admin_payment_remind_remind(id):
 @app.route("/member/payment_reminder", methods=["POST", "GET"])
 def member_payment_reminder():
     remind = mydb.cursor()
-    user_id = session["user_id"]
+    user_id = session.get('user_id')
     remind.execute(
         """
         SELECT
@@ -551,17 +553,22 @@ def member_payment_reminder():
     remind = remind.fetchall()
     count = len(remind)
     
+    current_date = datetime.now()
+
     # get all rows in sql that doesnt have duplicate in due_date column in the same ID and in the specific id only
     # SELECT * FROM your_table_name WHERE ID = 'your_specific_id' GROUP BY due_date HAVING COUNT(*) = 1;
     # SELECT * FROM tbl_transaction WHERE user_id = '2' GROUP BY user_id, due_date HAVING COUNT(*) = 1;
 
-    return memberredirect("member/payment_reminder.html", remind=remind, count=count)
+    return memberredirect("member/payment_reminder.html", remind=remind, count=count, current_date=current_date)
 
 
 @app.route("/member/payment/<int:payment_info>", methods=["POST", "GET"])
 def member_payment(payment_info):
     return memberredirect("/member/payment.html")
 
+@app.route("/member/payment_gcash", methods=["POST", "GET"])
+def member_payment_gcash():
+    return memberredirect("/member/payment_gcash.html")
 
 @app.route("/member/payment_history", methods=["POST", "GET"])
 def member_payment_history():
@@ -571,7 +578,6 @@ def member_payment_history():
 @app.route("/member/payment_verification")
 def payment_verification():
     return memberredirect("/member/payment_verification.html")
-
 
 @app.route("/logout")
 def logout():

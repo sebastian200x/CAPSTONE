@@ -12,9 +12,12 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
+
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Generate dataset >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 def generate_dataset(nbr):
-    face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    face_classifier = cv2.CascadeClassifier(
+        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    )
 
     def face_cropped(img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -158,15 +161,16 @@ def face_recognition():  # generate frame by frame from camera
         coords = draw_boundary(img, faceCascade, 1.1, 10, (255, 255, 0), "Face", clf)
         return img
 
-    faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    faceCascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    )
     clf = cv2.face.LBPHFaceRecognizer_create()
 
     # for pycharm
-    clf.read("classifier.xml")
-
+    # clf.read("classifier.xml")
 
     # for vscode:
-    # clf.read(".1 face_rec\classifier.xml")
+    clf.read(".1 face_rec\classifier.xml")
 
     wCam, hCam = 500, 400
 
@@ -184,6 +188,7 @@ def face_recognition():  # generate frame by frame from camera
         key = cv2.waitKey(1)
         if key == 27:
             break
+
 
 @app.route("/")
 def home():

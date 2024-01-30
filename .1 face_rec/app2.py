@@ -22,7 +22,7 @@ def generate_dataset(nbr):
         # scaling factor=1.3
         # Minimum neighbor = 5
 
-        if faces == ():
+        if faces is ():
             return None
         for x, y, w, h in faces:
             cropped_face = img[y : y + h, x : x + w]
@@ -195,7 +195,7 @@ def home():
 
     return render_template("index.html", data=data)
 
-
+# adding account page
 @app.route("/addprsn")
 def addprsn():
     mycursor.execute("select ifnull(max(prs_nbr) + 1, 101) from prs_mstr")
@@ -205,7 +205,7 @@ def addprsn():
 
     return render_template("addprsn.html", newnbr=int(nbr))
 
-
+# adding account in database
 @app.route("/addprsn_submit", methods=["POST"])
 def addprsn_submit():
     prsnbr = request.form.get("txtnbr")
@@ -223,12 +223,12 @@ def addprsn_submit():
     # return redirect(url_for('home'))
     return redirect(url_for("vfdataset_page", prs=prsnbr))
 
-
+# training page
 @app.route("/vfdataset_page/<prs>")
 def vfdataset_page(prs):
     return render_template("gendataset.html", prs=prs)
 
-
+# video for training or registering face
 @app.route("/vidfeed_dataset/<nbr>")
 def vidfeed_dataset(nbr):
     # Video streaming route. Put this in the src attribute of an img tag
@@ -236,7 +236,7 @@ def vidfeed_dataset(nbr):
         generate_dataset(nbr), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
-
+# video for face recognizing
 @app.route("/video_feed")
 def video_feed():
     # Video streaming route. Put this in the src attribute of an img tag
@@ -244,7 +244,7 @@ def video_feed():
         face_recognition(), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
-
+# face recognizing page
 @app.route("/fr_page")
 def fr_page():
     return render_template("members_reg_face_cam.html")

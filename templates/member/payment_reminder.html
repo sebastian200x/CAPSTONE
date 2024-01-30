@@ -3,45 +3,46 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Payment Reminder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/member/payment_reminder.css') }}">
-    {% include 'navbar.html' %} 
+    {% include 'navbar.html' %}
 </head>
 
 <body>
     {% if remind %}
+    <!-- Days left checker, if 7 days or less,  -->
     {% for reminder in remind %}
-    <div class="yellow bg">
+    {% set due_date = reminder[6] %}
+    {% set date_diff = (due_date - current_date.date()).days %}
+    <div class="container {% if date_diff > 7 %} yellow {% else %} red {% endif %}">
+
         <div class="warning-sign">
-            <img src="{{ url_for('static', filename='images/remind-exclamation.svg') }}" alt="Image">
+            <img src="{{ url_for('static', filename='images/remind-exclamation.svg') }}" alt="warning logo">
         </div>
+
         <div class="warning-text">
             <h1>REMINDER!</h1>
             <h5>Approaching Due Date!</h5>
-            <p>You have existing balance to be paid of: {{remind[4]}}</p>
-            <p>Due date: {{remind[6]}}</p>
-            <button type="button">Pay<i class="fa-solid fa-chevron-right"></i></button>
+            <p>You have existing balance to be paid of: {{reminder[4]}}</p>
+            <p>Due date: {{reminder[6]}}</p>
+            <form method="POST" action="/member/payment/{{reminder[0]}}">
+                <input type="submit" class="pay" value="&#xf054; PAY">
+            </form>
         </div>
     </div>
     {% endfor %}
-
-    <!-- <div class="red bg">
-        <div class="warning-sign">
-            <img src="{{ url_for('static', filename='images/remind-exclamation.svg') }}" class="invert" alt="Image">
-        </div>
-        <div class="warning-text">
-            <h1>REMINDER!</h1>
-            <h5>Approaching Due Date!</h5>
-            <strong>Less than 1 Week Left</strong>
-            <p>You have existing balance to be paid of: {{remind[4]}} </p>
-            <button type="button">Pay<i class="fa-solid fa-chevron-right"></i></button>
-
-        </div>
-    </div> -->
-
     {% endif %}
-
 </body>
 
 </html>
+
+<!-- 
+{% for reminder in reminders %}
+    {% set due_date = reminder.due_date %}
+    {% set current_date = now() %}
+    {% set date_diff = (due_date - current_date).days %}
+    {% if date_diff < 7 %}
+        <p>Reminder: {{ reminder.description }} is due in less than 7 days!</p>
+    {% endif %}
+{% endfor %} -->

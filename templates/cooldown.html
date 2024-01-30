@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Page</title>
+</head>
+
+<body>
+    <h2>Countdown Page</h2>
+    <p>Time left until next login attempt: <span id="countdown-timer"></span></p>
+
+    <script>
+        function updateCountdownTime(endTime) {
+            var now = new Date().getTime();
+            var distance = endTime - now;
+            var minutes = Math.floor(distance / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            var countdownText = (distance < 0) ? 'You can attempt to login now.' : minutes + ' minutes ' + seconds + ' seconds left until next login attempt.';
+            document.getElementById('countdown-timer').innerHTML = countdownText;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+            }
+        }
+
+        var cooldownRemaining = parseInt('{{ cooldown_remaining }}') * 1000; // Convert seconds to milliseconds
+        var endTime = new Date().getTime() + cooldownRemaining;
+        updateCountdownTime(endTime);
+
+        var countdownInterval = setInterval(function () {
+            updateCountdownTime(endTime);
+        }, 1000);
+    </script>
+</body>
+
+</html>

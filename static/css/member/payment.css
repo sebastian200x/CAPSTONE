@@ -1,10 +1,4 @@
 .box {
-    /* itong box pwede  */
-    /*margin-top: 60px; ito base mo nalang sa navbar baka hindi makita e. kasi nakasa fixed posistion navbar.. owww  */
-
-    /*margin: 40px auto; Ito yung pang center jet diko alam kung pati top e.*/
-
-    /* Itong pang center pero parang hindi nga center e hahaha */
     position: absolute;
     left: 50%;
     top: 50%;

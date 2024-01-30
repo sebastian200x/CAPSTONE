@@ -7,6 +7,7 @@
     <title>Payment Method</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/member/payment.css') }}">
     {% include 'navbar.html' %}
+
 </head>
 
 <body>
@@ -14,13 +15,8 @@
         <h1>Payment</h1>
         <div class="wrapper-payment">
             <p>How do you want to pay?</p>
-            <label for="cash"><i class="fa-solid fa-money-bill"></i>Cash<input type="radio" id="cash"
-                    name="payment"></label> <br>
-            <label for="G-cash"><i class="fa-brands fa-google"></i>G-Cash<input type="radio" id="G-cash"
-                    name="payment"></label> <br>
-            <form method="POST" action="/member/payment_gcash">
-                <input class="verify" type="submit" value="Payment Verification">
-            </form>
+
+            <input class="verify" type="submit" value="Payment Verification">
         </div>
     </div>
 </body>
